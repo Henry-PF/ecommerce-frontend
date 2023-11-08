@@ -1,0 +1,84 @@
+.nav_container {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 100;
+}
+
+.brand {
+    color: var(--primary);
+}
+
+.logo {
+    width: 60px;
+}
+
+.nav_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary) !important;
+    transition: all .3s ease;
+}
+
+.nav_link:hover {
+    color: var(--secondary) !important;
+}
+
+.icon {
+    width: 100%;
+    font-size: 1.4em;
+}
+
+.input,
+.select,
+.btn_search {
+    background-color: white;
+    border-radius: 0 !important;
+}
+
+.input:focus,
+.select:focus,
+.btn_search:focus {
+    box-shadow: none;
+    border: 1px solid var(--secondary);
+}
+
+.input:focus,
+.select:focus,
+.btn_search:focus {
+    box-shadow: none;
+    border: 1px solid var(--secondary);
+}
+
+.input {
+    width: 50%;
+}
+
+.select {
+    width: 25%;
+}
+
+.btn_search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--primary);
+    border: 1px solid var(--secondary);
+    background-color: white;
+    transition: all .3s ease;
+}
+
+.btn_search:hover {
+    color: var(--secondary);
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+}
+
+.btn_search:active {
+    color: var(--primary) !important;
+    border: 1px solid var(--secondary) !important;
+    background-color: var(--secondary) !important;
+}
