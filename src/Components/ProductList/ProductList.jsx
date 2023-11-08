@@ -1,7 +1,10 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import './ProducsList.css';
 import trendyLogo from '../../assets/Imagen de WhatsApp 2023-11-06 a las 18.58.11_9a79aced.jpg'; // Ajusta la ruta según la ubicación de tu archivo de imagen
+import NavBar from '../LandingPage/Navbar/NavBar';
+import Newsletter from '../LandingPage/Newsletter/Newsletter';
+import Footer from '../LandingPage/Footer/Footer';
 
 const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -66,7 +69,7 @@ const ProductList = () => {
     },
     // Agregar más productos si es necesario
   ];
-  
+
   const offset = currentPage * productsPerPage;
   const currentProducts = products.slice(offset, offset + productsPerPage);
 
@@ -78,36 +81,39 @@ const ProductList = () => {
 
 
   return (
-    <div className="product-list">
-      <div className="app-header">
-      <img src={trendyLogo} alt="Trendy Logo" className="logo-img" />
-        <h1 className="app-name">Trendy</h1>
-      </div>
-      <ul>
-        {currentProducts.map((product) => (
-          <li key={product.id} className="product-item">
-            <img src={product.image} alt={product.name} />
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <p>Precio: ${product.price}</p>
-              <p>Descripción: {product.description}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <ReactPaginate
-  previousLabel={'Anterior'}
-  nextLabel={'Siguiente'}
-  pageCount={Math.ceil(products.length / productsPerPage)}
-  marginPagesDisplayed={2}
-  pageRangeDisplayed={3}
-  onPageChange={handlePageClick}
-  containerClassName={'pagination'}
-  subContainerClassName={'pages pagination'}
-  activeClassName={'active'}
-/>
+    <>
+      <NavBar />
+      <div className="product-list">
+        <ul>
+          {currentProducts.map((product) => (
+            <li key={product.id} className="product-item">
+              <img src={product.image} alt={product.name} />
+              <div className="product-info">
+                <h3>{product.name}</h3>
+                <p>Precio: ${product.price}</p>
+                <p>Descripción: {product.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div>
 
-    </div>
+          <ReactPaginate
+            previousLabel={'Anterior'}
+            nextLabel={'Siguiente'}
+            pageCount={Math.ceil(products.length / productsPerPage)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+        </div>
+      </div>
+      <Newsletter />
+      <Footer />
+    </>
   );
 };
 

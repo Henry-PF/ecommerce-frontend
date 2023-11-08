@@ -1,26 +1,20 @@
-
-import { BrowserRouter as Router } from 'react-router-dom';
-
-import ProductList from './Components/ProductList/ProductList';
-
 import { useState } from 'react'
+import { Route, Routes } from "react-router-dom";
 import Home from './components/LandingPage/Home/Home'
+import ProductList from './Components/ProductList/ProductList';
 import './App.css'
 
 function App() {
-
-
-function App() {
   return (
+    <div className="App">
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route exact path='/product_list' element={<ProductList />} />
 
-    <Router>
-      <div className="App">
-        <ProductList />
-        {/* El resto de tu contenido */}
-      </div>
-      <Home />
-    </Router>
+      </Routes >
+    </div>
   );
 }
+
 
 export default App;
