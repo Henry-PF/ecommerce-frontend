@@ -1,0 +1,118 @@
+.main {
+    display: grid;
+    width: screen;
+    height: screen;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.divContenido {
+    display: flex;
+    border: 0.2rem solid black;
+    width: 100rem;
+    height: 40rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 1.2rem;
+}
+
+.divFoto {
+    display: flex;
+    width: 30%;
+    align-items: start;
+    justify-content: center;
+}
+.imagen {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    width: 95%;
+    height: 75%;
+    border-radius: 0.7rem;
+    border: 0.1rem solid rgb(189, 189, 189);
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+}
+
+.divProductoInfo {
+    display: inline;
+    width: 50%;
+    color: gray;
+}
+.hrProductoInfo{
+  width: 90%;
+  height: 0%;
+}
+.pProductoInfo{
+    margin-left: 5%;
+    display: flex;
+    justify-content: start;
+    color: rgba(0, 0, 0, 0.836);
+}
+.tituloProducto{
+    display: flex;
+    justify-content: start;
+    margin-left: 5%;
+    color: black;
+}
+.divPanelDeCompra {
+    display: flex;
+    width: 20%;
+    justify-content: center;
+}
+.divBotoneraCompra{
+    margin-top: 4.7rem;
+    width: 90%;
+    height: 20%;
+    border: 0.1rem solid rgb(189, 189, 189);
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    
+}
+.botonCarrito{
+    transition: all;
+    transition-delay: 0.1s;
+}
+.botonCarrito:hover{
+    box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 1px 21px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 1px 21px -1px rgba(0,0,0,0.75);
+    border-color: rgb(0, 0, 0);
+}
+.botonFavorito{
+    transition: all;
+    transition-delay: 0.1s;
+}
+.botonFavorito:hover{
+    box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 1px 21px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 1px 21px -1px rgba(0,0,0,0.75);
+    border-color: rgb(0, 0, 0);
+}
+.divDetalles {
+    margin-top: 1rem;
+    border: 0.2rem solid black;
+    width: 80rem;
+    min-height: 20rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+.infoDetalles{
+    border: 1px solid rgba(0, 0, 0, 0.301);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: start;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+}
