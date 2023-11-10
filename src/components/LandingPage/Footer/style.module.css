@@ -5,10 +5,13 @@
     flex-wrap: wrap;
     gap: 25px;
     padding: 50px;
+    background-color: #fff;
 }
 
 .social_media {
     max-width: 25%;
+    background-color: #fff;
+
 }
 
 .social_media .ul {
@@ -19,6 +22,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    background-color: #fff;
+
 }
 
 .social_media .social_link {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
 import style from './style.module.css'
+import { Link } from 'react-router-dom'
 
 const Login = (props) => {
     return (
@@ -33,10 +34,10 @@ const Login = (props) => {
                         </Button>
 
                     </Form>
-                    <Button className={style.btn_google} to='http://localhost:3001/auth/google' type="button">
+                    <Link className={style.btn_google} to='http://localhost:3002/api/auth/google' type="button">
                         <FcGoogle className={style.google_logo} />
                         Iniciar sesi&#243;n con Google
-                    </Button>
+                    </Link>
                     <div className='d-flex flex-column'>
                         <p>¿Eres nuevo? <a href="#">Registraese!</a></p>
                         <p>Ovidaste tu contraseña? <a href="#">Recuperar Contraseña</a></p>

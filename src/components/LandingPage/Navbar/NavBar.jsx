@@ -1,55 +1,59 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Form, Button } from 'react-bootstrap'
 import { BsBag, BsHeart, BsPerson, BsSearch } from 'react-icons/bs'
+import { AiOutlineMenu } from 'react-icons/ai'
 import logo from '../../../assets/logo.png'
 import style from './style.module.css'
 import Login from './Login/Login'
 
 const NavBar = () => {
-
     const navigate = useNavigate();
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState('');
+
 
     const toggleLogin = () => {
         setShow(!show);
     };
 
     const handleSubmit = () => {
-        navigate('/product_list')
-    }
+        const queryParams = `?nombre=${search}&categoria=...`;
+        navigate(`/product_list${queryParams}`);
+    };
 
     return (
         <>
-            <Navbar expand="lg" className={style.nav_container}>
-                <Container>
-                    <Navbar.Brand className={style.brand} href="/"><img src={logo} className={style.logo} alt="Trendy_Logo" /> Trendy Shop</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse className='justify-content-end' id="basic-navbar-nav">
-                        <Form className="d-flex w-75" onSubmit={handleSubmit}>
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className={style.input}
-                                aria-label="Search"
-                            />
-                            <Form.Select className={style.select} aria-label="Default select example">
-                                <option>Categoria</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </Form.Select>
-                            <Button className={style.btn_search} type='submit'><BsSearch /></Button>
-                        </Form>
-                        <Nav className="">
-                            <Nav.Link className={style.nav_link} ><BsHeart className={style.icon} /></Nav.Link>
-                            <Nav.Link className={style.nav_link} ><BsBag className={style.icon} /></Nav.Link>
-                            <Nav.Link className={style.nav_link} onClick={() => setShow(!show)}><BsPerson className={style.icon} onClick={() => setShow(!show)} /></Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar >
+            <nav className={style.nav_container}>
+                <div className={style.nav_header}>
+                    <div className={style.nav_logo}>
+                        LOGO
+                    </div>
+                    <form className={style.nav_search} onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
+                            placeholder='Buscar...'
+                        />
+                        <button className={style.btn_search} type='submit'><BsSearch /></button>
+                    </form>
+                    <div className={style.nav_icons}>
+                        <Link className={style.nav_icon} to={''}><BsHeart /></Link>
+                        <Link className={style.nav_icon} to={''}><BsBag /></Link>
+                        <Link className={style.nav_icon} to={''} onClick={() => setShow(!show)}><BsPerson /></Link>
+                        <Link className={`${style.nav_icon} ${style.nav_menu}`} to={''} onClick={() => setOpen(!open)}><AiOutlineMenu /></Link>
+                    </div>
+                </div>
+                <div className={`${style.nav_links} ${open ? style.open : style.close}`}>
+                    <a className={style.nav_link} href={'/'}>Home</a>
+                    <a className={style.nav_link} href={'/product_list'}>Shop</a>
+                    <Link className={style.nav_link} to={''}>Sobre Nosotros</Link>
+                    <Link className={style.nav_link} to={''}>Contacto</Link>
+                </div>
+            </nav>
             <Login show={show} toggleLogin={toggleLogin} />
         </>
     )

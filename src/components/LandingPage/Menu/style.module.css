@@ -41,7 +41,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-template-rows: repeat(2, 127px);
     width: 80%;
     height: 100%;
@@ -81,4 +81,10 @@
     color: var(--primary);
     border: none;
     background-color: transparent;
+}
+
+@media (max-width: 1199px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
 }

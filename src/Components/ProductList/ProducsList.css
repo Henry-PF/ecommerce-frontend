@@ -59,12 +59,6 @@
   padding: 15px;
 }
 
-.product-list h2 {
-  font-size: 24px;
-  color: #00ADB5;
-  /* Texto turquesa */
-  margin-bottom: 20px;
-}
 
 .product-item {
   min-height: 230px;
@@ -79,12 +73,13 @@
   /* Usa flexbox para organizar el contenido */
   align-items: center;
   /* Centra verticalmente el contenido dentro del contenedor */
+  background-color: #fff;
 }
 
 .product-item img {
-  max-width: 10%;
-  height: auto;
-  margin-right: 10px;
+  width: 180px;
+  height: 180px;
+  object-fit: fill;
   /* Añade un espacio entre la imagen y el contenido de la derecha */
 }
 
@@ -93,16 +88,86 @@
   color: #393E46;
   /* Texto gris oscuro */
   margin: 10px 0;
+  background-color: #fff;
+
 }
 
-.product-item p {
-  font-size: 14px;
-  color: #393E46;
-  /* Texto gris oscuro */
-  margin: 5px 0;
-}
 
 .product-info {
   flex: 1;
+  height: 100%;
+  padding: 20px;
+  background-color: #fff;
   /* Permite que el contenido de la información ocupe todo el espacio restante */
+}
+
+.product-orders {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #fff;
+}
+
+.product-price {
+  font-weight: 600;
+  color: #393e46;
+  background-color: #fff;
+  margin: 0;
+}
+
+.product-stock {
+  font-size: 1.1em;
+  color: gray;
+  background-color: #fff;
+
+}
+
+.product-shipping {
+  font-size: 1.1em;
+  color: green;
+  background-color: #fff;
+
+}
+
+.icon-diamont {
+  font-size: 1.1em;
+  margin-top: 4px;
+  color: rgb(155, 155, 155);
+  background-color: #fff;
+
+}
+
+.product-description {
+  background-color: #fff;
+  font-size: 1.1em;
+}
+
+.menu_search {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.accordion-header {
+  margin: 0;
+}
+
+.accordion_body {
+  display: flex;
+  flex-direction: column;
+}
+
+.category_input {
+  margin: 0 10px;
+}
+
+.accordion_price {
+  display: flex;
+}
+
+.accordion_price input {
+  width: 100%;
+  margin: 0 5px;
+  text-align: center;
 }
