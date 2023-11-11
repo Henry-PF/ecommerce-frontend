@@ -1,0 +1,46 @@
+/* style.css */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.link-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.link-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link-container a:hover {
+    text-decoration: underline;
+}
+.button-container {
+    text-align: center;
+    margin-top: 10px;
+}
