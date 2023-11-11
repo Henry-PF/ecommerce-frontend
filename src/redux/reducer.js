@@ -21,7 +21,7 @@ const rootReducer = (state = initialState, action) => {
         case SEARCH_PRODUCTS:
             return {
                 ...state,
-                filters: action.payload
+                produtcs: action.payload
             }
         default:
             return state;

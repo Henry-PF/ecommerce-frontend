@@ -29,13 +29,14 @@ export const getAllCategories = () => {
     }
 }
 
-export const buscarProductos = (filtros) => {
+export const buscarProductos = ({ nombre, categoria }) => {
+    console.log(nombre, categoria);
     return async (dispatch) => {
         try {
-            const { data } = await axios.post('/api/filtros', filtros);
+            const { data } = await axios.get(`/filtros/search?nombre=${nombre}&categoria=${categoria}`);
             dispatch({
                 type: SEARCH_PRODUCTS,
-                payload: data
+                payload: data.data
             });
         } catch (error) {
             console.error('Error al buscar productos:', error);

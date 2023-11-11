@@ -35,12 +35,11 @@ const ProductList = () => {
     const params = new URLSearchParams(location.search);
     const filtroNombre = params.get('nombre');
     const categoria = params.get('categoria');
-    // Obtener otros filtros según sea necesario
+    console.log('producto', filtroNombre);
 
     dispatch(buscarProductos({
       nombre: filtroNombre,
       categoria: categoria,
-      // Otros filtros...
     }));
 
     dispatch(getAllProducts());
