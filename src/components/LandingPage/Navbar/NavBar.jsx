@@ -20,7 +20,7 @@ const NavBar = () => {
     };
 
     const handleSubmit = () => {
-        const queryParams = `?nombre=${search}&categoria=...`;
+        const queryParams = `?nombre=${search}&categoria=`;
         navigate(`/product_list${queryParams}`);
     };
 
