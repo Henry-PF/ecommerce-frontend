@@ -1,9 +1,10 @@
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, SEARCH_PRODUCTS } from "./action-type";
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS } from "./action-type";
 
 const initialState = {
-    produtcs: {},
-    categories: {},
-    filters: []
+    products: [],
+    categories: [],
+    filters: [],
+    reviews: [],
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -11,7 +12,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
-                produtcs: action.payload,
+                products: action.payload,
             }
         case GET_ALL_CATEGORIES:
             return {
@@ -21,7 +22,12 @@ const rootReducer = (state = initialState, action) => {
         case SEARCH_PRODUCTS:
             return {
                 ...state,
-                produtcs: action.payload
+                products: action.payload
+            }
+        case GET_TESTIMONIALS:
+            return {
+                ...state,
+                reviews: action.payload
             }
         default:
             return state;

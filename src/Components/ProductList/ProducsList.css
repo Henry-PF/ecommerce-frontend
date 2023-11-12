@@ -1,22 +1,28 @@
-/* ProductList.css */
-/* ProductList.css */
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  /* Centra las opciones horizontalmente */
+  gap: 20px;
+  width: 100%;
+  font-size: 2em;
+  color: var(--primary);
+  margin-bottom: 20px;
 }
 
-.pagination a {
-  text-decoration: none;
-  font-size: 24px;
-  /* Tamaño de fuente de las flechas */
-  color: #00ADB5;
-  /* Color de las flechas */
-  margin: 0 10px;
-  /* Espacio entre las flechas */
-  cursor: pointer;
+.pagination .active {
+
+  display: flex;
+  align-items: center;
+  color: black;
+  background-color: transparent;
+}
+
+.pagination-icon {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.713);
+  margin-top: 5px;
+  background-color: transparent;
 }
 
 .app-header {
@@ -43,7 +49,8 @@
 }
 
 .product-list {
-
+  display: grid;
+  grid-template-columns: 270px auto;
   background-color: var(--bg-color);
   width: 100%;
   /* Ocupa todo el ancho disponible */
@@ -56,30 +63,49 @@
 .product-list ul {
 
   gap: 8px;
-  padding: 15px;
+  padding: 0 15px;
 }
 
 
 .product-item {
-  min-height: 230px;
+  width: 100%;
+  min-height: 200px;
   margin-bottom: 8px;
-  /* background-color: var(--secondary); */
-  /* Fondo verde claro */
+
   border: 1px solid var(--secondary);
-  /* Borde turquesa */
   border-radius: 6px;
-  padding: 10px;
   display: flex;
   /* Usa flexbox para organizar el contenido */
-  align-items: center;
+  align-items: flex-start;
   /* Centra verticalmente el contenido dentro del contenedor */
   background-color: #fff;
+  text-decoration: none;
+  transition: all .2s;
+}
+
+
+
+.product-item:hover {
+  transform: translateY(1px);
+  border: 1px solid var(--primary);
+}
+
+.product-card {
+  width: 100%;
+  min-height: 200px;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  text-decoration: none;
+  transition: all .2s;
 }
 
 .product-item img {
   width: 180px;
   height: 180px;
   object-fit: fill;
+  margin: 0;
   /* Añade un espacio entre la imagen y el contenido de la derecha */
 }
 
@@ -87,16 +113,20 @@
   font-size: 18px;
   color: #393E46;
   /* Texto gris oscuro */
-  margin: 10px 0;
+  margin: 0;
   background-color: #fff;
+}
 
+.product_category {
+  margin-bottom: 5px;
+  color: var(--primary);
 }
 
 
 .product-info {
   flex: 1;
   height: 100%;
-  padding: 20px;
+  padding: 0 20px;
   background-color: #fff;
   /* Permite que el contenido de la información ocupe todo el espacio restante */
 }
@@ -105,6 +135,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  margin: 5px 0;
   background-color: #fff;
 }
 
@@ -116,21 +147,21 @@
 }
 
 .product-stock {
-  font-size: 1.1em;
+  font-size: 1em;
   color: gray;
   background-color: #fff;
 
 }
 
 .product-shipping {
-  font-size: 1.1em;
+  font-size: .9em;
   color: green;
   background-color: #fff;
 
 }
 
 .icon-diamont {
-  font-size: 1.1em;
+  font-size: 1em;
   margin-top: 4px;
   color: rgb(155, 155, 155);
   background-color: #fff;
@@ -138,8 +169,8 @@
 }
 
 .product-description {
-  background-color: #fff;
-  font-size: 1.1em;
+  font-size: 1em;
+  color: #393E46;
 }
 
 .menu_search {
@@ -170,4 +201,19 @@
   width: 100%;
   margin: 0 5px;
   text-align: center;
+}
+
+.btn_fav {
+  width: 50px;
+  height: 50px;
+  color: rgba(255, 0, 0, 0.386);
+  font-size: 2em;
+  border: none;
+  background-color: transparent;
+  transition: all .3s ease;
+}
+
+.btn_fav:hover {
+  color: rgba(255, 0, 0, 0.712);
+
 }

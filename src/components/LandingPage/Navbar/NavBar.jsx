@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Form, Button } from 'react-bootstrap'
 import { BsBag, BsHeart, BsPerson, BsSearch } from 'react-icons/bs'
@@ -19,10 +19,19 @@ const NavBar = () => {
         setShow(!show);
     };
 
-    const handleSubmit = () => {
-        const queryParams = `?nombre=${search}&categoria=`;
-        navigate(`/product_list${queryParams}`);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const queryParams = search ? `?nombre=${encodeURIComponent(search)}&categoriaId=` : '';
+        const url = `/product_list/${queryParams}`;
+        navigate(url);
+
+        setSearch(search);
     };
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search)
+        setSearch(params.get('nombre') || search);
+    }, [])
 
     return (
         <>

@@ -1,19 +1,21 @@
 import axios from 'axios';
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, SEARCH_PRODUCTS } from './action-type';
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS } from './action-type';
 
-export const getAllProducts = () => {
+export const getAllProducts = (page) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('/productos');
+            const { data } = await axios.get(`/productos?page=${page}`);
+            console.log(data);
             dispatch({
                 type: GET_ALL_PRODUCTS,
-                payload: data.data,
-            })
+                payload: data
+            });
         } catch (error) {
             console.error(error);
         }
-    }
-}
+    };
+};
+
 
 export const getAllCategories = () => {
     return async (dispatch) => {
@@ -29,17 +31,30 @@ export const getAllCategories = () => {
     }
 }
 
-export const buscarProductos = ({ nombre, categoria }) => {
-    console.log(nombre, categoria);
+export const buscarProductos = ({ nombre, categoria, precioMin, precioMax, page }) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`/filtros/search?nombre=${nombre}&categoria=${categoria}`);
+            const { data } = await axios.get(`/filtros/search?nombre=${nombre}&categoriaId=${categoria}&precioMin=${precioMin}&precioMax=${precioMax}&page=${page}`);
             dispatch({
                 type: SEARCH_PRODUCTS,
-                payload: data.data
+                payload: data
             });
         } catch (error) {
             console.error('Error al buscar productos:', error);
         }
     };
 };
+
+export const getTestimonials = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get('/reviews');
+            dispatch({
+                type: GET_TESTIMONIALS,
+                payload: data
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}

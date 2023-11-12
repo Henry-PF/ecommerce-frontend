@@ -4,6 +4,7 @@ import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Newsletter from '../Newsletter/Newsletter'
 import Menu from '../Menu/Menu'
+import Reviews from '../Reviews/Reviews'
 
 
 
@@ -15,6 +16,7 @@ const Home = () => {
                 <Header />
                 <Menu />
             </div>
+            <Reviews />
             <Newsletter />
             <Footer />
         </>
