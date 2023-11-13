@@ -2,10 +2,10 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Route, Routes } from "react-router-dom";
 import Home from './components/LandingPage/Home/Home'
-import ProductList from './Components/ProductList/ProductList';
-import Details from './Components/Detail/Details';
+import ProductList from './components/ProductList/ProductList';
+import Details from './components/Detail/Details';
 import './App.css'
-import CreateProduct from './Components/CreateProduct/CreateProduct';
+import CreateProduct from './components/CreateProduct/CreateProduct';
 
 axios.defaults.baseURL = 'http://localhost:3002/api'
 
