@@ -7,7 +7,7 @@ import Details from './components/Detail/Details';
 import './App.css'
 import CreateProduct from './components/CreateProduct/CreateProduct';
 
-axios.defaults.baseURL = 'http://localhost:3002/api'
+axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api";
 
 function App() {
   return (

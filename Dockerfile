@@ -1,6 +1,6 @@
 FROM node:16.18.0
 
-WORKDIR /usr/src/app/backend
+WORKDIR /usr/src/app/frontend
 
 COPY package.json ./
 
@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3002
+EXPOSE 3001
 
-CMD ["node", "index.js"]
+CMD ["npm", "run", "dev"]
