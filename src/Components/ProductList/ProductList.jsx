@@ -7,7 +7,7 @@ import Newsletter from '../LandingPage/Newsletter/Newsletter';
 import Footer from '../LandingPage/Footer/Footer';
 import { VscDebugBreakpointLog } from 'react-icons/vsc';
 import './ProducsList.css';
-import { buscarProductos, getAllCategories, getAllProducts } from '../../redux/actions';
+import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from '../../redux/actions';
 import { Accordion } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
@@ -26,6 +26,7 @@ const ProductList = () => {
   const [precioMax, setPrecioMax] = useState('');
   const [precioMin, setPrecioMin] = useState('');
   const [totalPages, setTotalPages] = useState(1);
+  const [sortPrice, setSortPrice] = useState('');
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -44,15 +45,15 @@ const ProductList = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const filtroNombre = params.get('nombre');
+    const filtroNombre = params.get('nombre' || '');
     const categoria = params.get('categoria');
     setSearchActive(Boolean(filtroNombre || categoria || selectedCategories.length > 0));
     dispatch(getAllCategories());
 
-    if (filtroNombre || categoria || selectedCategories.length > 0) {
+    if (filtroNombre || categoria || selectedCategories.length > 0 || precioMin || precioMax) {
       dispatch(
         buscarProductos({
-          nombre: filtroNombre,
+          nombre: filtroNombre || '',
           categoria: categoria || selectedCategories.join(','),
           precioMin: precioMin,
           precioMax: precioMax,
@@ -62,6 +63,7 @@ const ProductList = () => {
     } else {
       dispatch(getAllProducts(currentPage));
     }
+    dispatch(sortProducts(sortPrice))
   }, [dispatch, location.search, selectedCategories, precioMax, precioMin, currentPage]);
 
   return (
@@ -89,13 +91,29 @@ const ProductList = () => {
                 }
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="1">
+          </Accordion>
+
+          <Accordion defaultActiveKey={['0']} alwaysOpen>
+            <Accordion.Item eventKey="0">
               <Accordion.Header>Precio</Accordion.Header>
               <Accordion.Body className='accordion_price'>
                 <input type="number" placeholder='Minimo' className='' min={0} onChange={(event) => setPrecioMin(event.target.value)} /> - <input type="number" placeholder='Maximo' className='' min={0} onChange={(event) => setPrecioMax(event.target.value)} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          {/* <Accordion defaultActiveKey={['0']} alwaysOpen>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Ordenar</Accordion.Header>
+              <Accordion.Body className='accordion_price'>
+                <select name="" id=""
+                  onChange={(event) => setSortPrice(event.target.value)}
+                >
+                  <option value="price_asc">Mas Caro</option>
+                  <option value="price_desc">Mas Barato</option>
+                </select>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion> */}
         </aside>
 
         {(searchActive || (products.data && products.data.length > 0)) && (

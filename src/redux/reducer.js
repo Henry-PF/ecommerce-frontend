@@ -1,4 +1,4 @@
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS } from "./action-type";
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE } from "./action-type";
 
 const initialState = {
     products: [],
@@ -29,6 +29,28 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 reviews: action.payload
             }
+        case SORT_PRICE:
+            const { products } = state;
+            const orderBy = action.payload;
+
+            let sortedRecipes = [];
+            console.log('redux', products.precio);
+            switch (orderBy) {
+                case 'price_asc':
+                    sortedRecipes = [...products].data?.sort((a, b) => b.precio - a.precio);
+                    break;
+                case 'price_desc':
+                    sortedRecipes = [...products]?.sort((a, b) => a.precio - b.precio);
+                    break;
+
+                default:
+                    return { ...state, }
+            }
+
+            return {
+                ...state,
+                products: sortedRecipes,
+            };
         default:
             return state;
     }

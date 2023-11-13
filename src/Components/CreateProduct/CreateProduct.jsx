@@ -7,6 +7,8 @@ import Select from 'react-select';
 import { getAllCategories, createProduct } from '../../redux/actions'; // Corregir el nombre de la función createProduct
 import { useDispatch, connect, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import NavBar from '../LandingPage/Navbar/NavBar';
+
 
 function CreateProduct() {
   const dispatch = useDispatch();
@@ -79,7 +81,8 @@ function CreateProduct() {
 
 
   return (
-    <main className='container'>
+    <main >
+      <NavBar />
       <div className="wrapper">
         {/* Content Wrapper. Contains page content */}
         <div className="content-wrapper">
@@ -88,7 +91,7 @@ function CreateProduct() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className=''>Create Product</h1>
+                  <h1 className='text-center'>Crear Producto</h1>
                 </div>
               </div>
             </div>
@@ -118,7 +121,8 @@ function CreateProduct() {
                 <FloatingLabel controlId="floatingPassword" label="Descripcion" className="w-100">
                   <Form.Control
                     className={styles.form_input}
-                    type="text"
+                    as="textarea"
+                    style={{ height: '150px' }}
                     placeholder="Descripcion"
                     name='descripcion'
                     value={dataProduct.descripcion}

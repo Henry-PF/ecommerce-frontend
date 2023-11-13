@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS } from './action-type';
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE } from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -69,3 +69,10 @@ export const getTestimonials = () => {
         }
     }
 }
+
+export const sortProducts = (orderBy) => {
+    return {
+        type: SORT_PRICE,
+        payload: orderBy,
+    };
+};

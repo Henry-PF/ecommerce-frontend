@@ -104,7 +104,7 @@
 .product-item img {
   width: 180px;
   height: 180px;
-  object-fit: fill;
+  object-fit: contain;
   margin: 0;
   /* Añade un espacio entre la imagen y el contenido de la derecha */
 }
