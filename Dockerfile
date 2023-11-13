@@ -2,10 +2,14 @@ FROM node:16.18.0
 
 WORKDIR /usr/src/app/frontend
 
+RUN chown node:node ./
+USER node
+
 COPY package.json ./
 
+RUN npm ci && npm cache clean --force
+
 RUN npm install
-RUN npm run build
 
 COPY . .
 
