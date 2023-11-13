@@ -17,6 +17,17 @@ export const getAllProducts = (page) => {
 };
 
 
+export const createProduct = (formData) => async () => {
+    console.log('REDUX', formData);
+    try {
+        const response = await axios.post('/productos', formData);
+        console.log('Registro exitoso:', response.data);
+    } catch (error) {
+        console.error('Error en el registro:', error.message);
+    }
+};
+
+
 export const getAllCategories = () => {
     return async (dispatch) => {
         try {

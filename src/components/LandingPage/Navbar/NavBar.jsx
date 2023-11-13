@@ -61,6 +61,7 @@ const NavBar = () => {
                     <a className={style.nav_link} href={'/product_list'}>Shop</a>
                     <Link className={style.nav_link} to={''}>Sobre Nosotros</Link>
                     <Link className={style.nav_link} to={''}>Contacto</Link>
+                    <Link className={style.nav_link} to={'/CreateProducts'}>Crear Producto</Link>
                 </div>
             </nav>
             <Login show={show} toggleLogin={toggleLogin} />
