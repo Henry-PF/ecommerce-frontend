@@ -3,6 +3,81 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Carousel, Card } from 'react-bootstrap';
 import styles from './style.module.css'
 import { dataTestimonials } from './dataTestimonials.js'
+import PropTypes from 'prop-types';
+
+
+const StarRating = ({ rating, onRatingChange }) => {
+    const score = ["⭐", "⭐", "⭐", "⭐", "⭐"];
+
+    const handleStarClick = (selectedRating) => {
+        onRatingChange(selectedRating);
+    };
+
+    return (
+        <div>
+            {score.map((star, index) => (
+                <span
+                    key={index}
+                    onClick={() => handleStarClick(index + 1)}
+                    style={{ cursor: 'pointer', color: index < rating ? 'gold' : 'gray' }}
+                >
+                    {star}
+                </span>
+            ))}
+        </div>
+    );
+};
+
+StarRating.propTypes = {
+    rating: PropTypes.number.isRequired, 
+    onRatingChange: PropTypes.func.isRequired,
+};
+
+
+const Review = ({ onSubmit }) => {
+    const [reviewText, setReviewText] = useState('');
+    const [rating, setRating] = useState(0);
+
+    const handleTextChange = (selectedRating) => {
+        setReviewText(selectedRating);
+    };
+
+    const handleRatingChange = (event) => {
+        setRating(parseInt(event.target.value));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSubmit({ text: reviewText, rating });
+        setReviewText('');
+        setRating(0);
+    };
+
+    return (
+        <div>
+            <h3>Comparte tu experiencia</h3>
+            <form onSubmit={handleSubmit}>
+        <div>
+            <label htmlFor="reviewText">Comentario:</label>
+                <textarea
+                    id="reviewText"
+                    value={reviewText}
+                    onChange={handleTextChange}
+                    placeholder="Escribe tu opinión..."/>
+                </div>
+        <div>
+            <label>Puntuación:</label>
+            <StarRating rating={rating} onRatingChange={handleRatingChange} />
+                </div>
+                <button type="submit">Enviar Review</button>
+            </form>
+        </div>
+    );
+};
+
+Review.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
 
 const Reviews = () => {
     const dispatch = useDispatch();
@@ -49,6 +124,10 @@ const Reviews = () => {
         ));
     };
 
+    const handleReviewSubmit = (reviewData) => {
+        console.log('Nueva revisión:', reviewData);
+    };
+
     return (
         <div className={styles.testimonialsContainer}>
             <h2 style={{ color: 'black', fontWeight: 'bolder' }}>TESTIMONIOS</h2>
@@ -70,6 +149,7 @@ const Reviews = () => {
                     </Carousel.Item>
                 ))}
             </Carousel>
+            <Review onSubmit={handleReviewSubmit} />
         </div>
     )
 }
