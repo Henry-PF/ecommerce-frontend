@@ -1,10 +1,11 @@
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE } from "./action-type";
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, USER, USER_LOGIN } from "./action-type";
 
 const initialState = {
     products: [],
     categories: [],
     filters: [],
     reviews: [],
+    user: {},
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -51,6 +52,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: sortedRecipes,
             };
+
         default:
             return state;
     }

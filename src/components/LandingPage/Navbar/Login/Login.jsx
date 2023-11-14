@@ -1,10 +1,48 @@
 import React, { useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
-import style from './style.module.css'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import style from './style.module.css'
 
 const Login = (props) => {
+
+    const [userData, setUserData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const { email, password } = userData;
+
+        try {
+            const { data } = await axios.post('/auth/login', {
+                correo: email,
+                password: password,
+            });
+            if (data.error) {
+                Swal.fire({
+                    title: data.message,
+                    icon: 'error'
+                })
+            }
+
+            if (await data.token) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('id', data.data.id);
+                localStorage.setItem('nombre', data.data.nombre);
+                localStorage.setItem('apellido', data.data.apellido);
+                localStorage.setItem('correo', data.data.correo);
+                window.location.reload();
+            }
+
+        } catch (error) {
+            console.log(error);
+        };
+    }
+
     return (
         <>
             <Offcanvas show={props.show} onHide={props.toggleLogin} placement='end' backdrop={true}>
@@ -12,12 +50,13 @@ const Login = (props) => {
                     <Offcanvas.Title>INICIAR SESI&#211;N</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Form >
+                    <Form onSubmit={handleSubmit}>
                         <FloatingLabel controlId="floatingInput" label="Email" className="mb-2">
                             <Form.Control
                                 className={style.input}
                                 type="email"
                                 placeholder="Email"
+                                onChange={(event) => setUserData({ ...userData, email: event.target.value })}
 
                             />
                         </FloatingLabel>
@@ -26,6 +65,7 @@ const Login = (props) => {
                                 className={style.input}
                                 type="password"
                                 placeholder="Contraseña"
+                                onChange={(event) => setUserData({ ...userData, password: event.target.value })}
 
                             />
                         </FloatingLabel>
@@ -39,7 +79,7 @@ const Login = (props) => {
                         Iniciar sesi&#243;n con Google
                     </Link>
                     <div className='d-flex flex-column'>
-                        <p>¿Eres nuevo? <a href="#">Registraese!</a></p>
+                        <p>¿Eres nuevo? <a href="/register">Registraese!</a></p>
                         <p>Ovidaste tu contraseña? <a href="#">Recuperar Contraseña</a></p>
                     </div>
                 </Offcanvas.Body>
