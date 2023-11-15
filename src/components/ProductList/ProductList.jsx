@@ -51,7 +51,6 @@ const ProductList = () => {
     dispatch(getAllCategories());
 
     if (filtroNombre || categoria || selectedCategories.length > 0 || precioMin || precioMax) {
-
       dispatch(
         buscarProductos({
           nombre: filtroNombre || '',
@@ -71,6 +70,7 @@ const ProductList = () => {
     <>
       <NavBar />
       <div className="product-list container">
+
         <aside className='menu_search'>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="0">

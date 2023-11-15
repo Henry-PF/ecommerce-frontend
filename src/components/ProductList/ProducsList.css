@@ -62,6 +62,8 @@
 
 .product-list ul {
   padding: 0;
+  gap: 8px;
+  padding: 0 15px;
 }
 
 
@@ -85,6 +87,7 @@
 
 .product-item:hover {
   box-shadow: 1px 1px 5px var(--primary);
+  transform: translateY(1px);
   border: 1px solid var(--primary);
 }
 
