@@ -34,9 +34,13 @@ StarRating.propTypes = {
 };
 
 
-const Review = ({ onSubmit }) => {
+const Review = ({ onSubmit, onReport }) => {
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState(0);
+
+    const [showReportForm, setShowReportForm] = useState(false);
+    const [reportReason, setReportReason] = useState('');
+    const [additionalDetails, setAdditionalDetails] = useState('');
 
     const handleTextChange = (selectedRating) => {
         setReviewText(selectedRating);
@@ -53,6 +57,23 @@ const Review = ({ onSubmit }) => {
         setRating(0);
     };
 
+    const handleReport = () => {
+        setShowReportForm(true);
+    };
+    
+    const handleSubmitReport = () => {
+        const reportData = {
+          reason: reportReason,
+          details: additionalDetails,
+    };
+    
+    onReport(reportData);
+    
+    setShowReportForm(false);
+    setReportReason('');
+    setAdditionalDetails('');
+    };
+
     return (
         <div>
             <h3>Comparte tu experiencia</h3>
@@ -62,7 +83,7 @@ const Review = ({ onSubmit }) => {
                 <textarea
                     id="reviewText"
                     value={reviewText}
-                    onChange={handleTextChange}
+                    onChange={(e) => handleTextChange(e.target.value)}
                     placeholder="Escribe tu opinión..."/>
                 </div>
         <div>
@@ -70,6 +91,21 @@ const Review = ({ onSubmit }) => {
             <StarRating rating={rating} onRatingChange={handleRatingChange} />
                 </div>
                 <button type="submit">Enviar Review</button>
+                <button onClick={handleReport}>Reportar</button>
+        {showReportForm && (
+        <div>
+            <label>Motivo del reporte:</label>
+            <select value={reportReason} onChange={(e) => setReportReason(e.target.value)}>
+              {/* Opciones para el motivo del reporte */}
+            </select>
+            <label>Detalles adicionales:</label>
+            <textarea
+              value={additionalDetails}
+              onChange={(e) => setAdditionalDetails(e.target.value)}
+            />
+            <button onClick={handleSubmitReport}>Enviar Reporte</button>
+        </div>
+        )}
             </form>
         </div>
     );
@@ -77,6 +113,7 @@ const Review = ({ onSubmit }) => {
 
 Review.propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    onReport: PropTypes.func.isRequired,
 };
 
 const Reviews = () => {
@@ -124,9 +161,15 @@ const Reviews = () => {
         ));
     };
 
+    // Enviar revision al back
     const handleReviewSubmit = (reviewData) => {
         console.log('Nueva revisión:', reviewData);
     };
+
+    // Enviar reporte al back
+    const handleReportSubmit = (reportData) => {
+        console.log('Nuevo reporte:', reportData);
+      };
 
     return (
         <div className={styles.testimonialsContainer}>
@@ -149,7 +192,7 @@ const Reviews = () => {
                     </Carousel.Item>
                 ))}
             </Carousel>
-            <Review onSubmit={handleReviewSubmit} />
+            <Review onSubmit={handleReviewSubmit} onReport={handleReportSubmit}/>
         </div>
     )
 }
