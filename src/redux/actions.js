@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, USER, USER_LOGIN } from './action-type';
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, } from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -77,19 +77,6 @@ export const sortProducts = (orderBy) => {
     };
 };
 
-export const userLoginSuccess = () => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get('/auth/user', { withCredentials: true });
-            dispatch({
-                type: USER,
-                payload: data,
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
 
 export const userRegister = (formData) => async () => {
     console.log(formData);

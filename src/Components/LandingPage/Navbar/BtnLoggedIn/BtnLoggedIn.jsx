@@ -21,7 +21,7 @@ const BtnLoggedIn = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="/user">Mi Cuenta</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user">Mi Cuenta</Dropdown.Item>
                     <Dropdown.Item href="">Another action</Dropdown.Item>
                     <Dropdown.Item href="">Something else</Dropdown.Item>
                     <Dropdown.Divider />

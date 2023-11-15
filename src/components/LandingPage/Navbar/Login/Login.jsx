@@ -79,7 +79,7 @@ const Login = (props) => {
                         Iniciar sesi&#243;n con Google
                     </Link>
                     <div className='d-flex flex-column'>
-                        <p>¿Eres nuevo? <a href="/register">Registraese!</a></p>
+                        <p>¿Eres nuevo? <a href="/register">Registrarse!</a></p>
                         <p>Ovidaste tu contraseña? <a href="#">Recuperar Contraseña</a></p>
                     </div>
                 </Offcanvas.Body>
