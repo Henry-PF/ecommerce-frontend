@@ -4,7 +4,9 @@
 
 }
 
-.container {}
+.container {
+    display: flex;
+}
 
 .nav_container {
     display: flex;
