@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import style from './style.module.css'
+import Cookies from 'js-cookie'
 
 const Login = (props) => {
 
@@ -12,6 +13,7 @@ const Login = (props) => {
         email: "",
         password: "",
     });
+    const [user, setUser] = useState({});
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,6 +24,7 @@ const Login = (props) => {
                 correo: email,
                 password: password,
             });
+            console.log(data.data);
             if (data.error) {
                 Swal.fire({
                     title: data.message,
@@ -29,12 +32,9 @@ const Login = (props) => {
                 })
             }
 
-            if (await data.token) {
+            if (data.token) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('id', data.data.id);
-                localStorage.setItem('nombre', data.data.nombre);
-                localStorage.setItem('apellido', data.data.apellido);
-                localStorage.setItem('correo', data.data.correo);
                 window.location.reload();
             }
 
@@ -42,6 +42,19 @@ const Login = (props) => {
             console.log(error);
         };
     }
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        const userData = Cookies.get('user');
+
+        if (userData) {
+            const parsedUser = JSON.parse(userData);
+            console.log(parsedUser);
+            localStorage.setItem('token', token);
+            localStorage.setItem('id', parsedUser.id);
+
+        };
+    }, [])
 
     return (
         <>

@@ -5,16 +5,16 @@
 }
 
 .container {
-    display: flex;
+    grid-column: 1;
+    position: sticky;
+    bottom: 0;
 }
 
 .nav_container {
     display: flex;
     flex-direction: column;
-
     width: auto;
-    height: calc(100vh - 110px);
-    background-color: antiquewhite;
+    min-height: calc(100vh - 100px);
 }
 
 .nav_section,
@@ -93,5 +93,7 @@
 .panel_container {
     display: flex;
     justify-content: center;
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(247, 247, 247);
+    padding: 20px;
+    grid-column: 2;
 }

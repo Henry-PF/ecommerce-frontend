@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import style from './style.module.css'
 import Login from './Login/Login'
 import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
+import axios from 'axios'
 
 const NavBar = () => {
     const dispatch = useDispatch()
@@ -35,19 +36,32 @@ const NavBar = () => {
 
         if (userData) {
             const parsedUser = JSON.parse(userData);
-            setUser(parsedUser);
             console.log(parsedUser);
             localStorage.setItem('token', token);
             localStorage.setItem('id', parsedUser.id);
             localStorage.setItem('nombre', parsedUser.usuario);
+
+
         }
+        const fetchUser = async () => {
+            try {
+                const { data } = await axios.get(`/usuarios/${localStorage.getItem('id')}`);
+                console.log(data);
+                setUser(data.data);
+            } catch (error) {
+                console.error("Error al obtener los datos del usuario:", error);
+            }
+        };
+
+        fetchUser();
 
         const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
     }, []);
 
-
     console.log(user);
+
+
     return (
         <>
             <nav className={style.nav_container}>
@@ -71,7 +85,7 @@ const NavBar = () => {
 
                             {
                                 localStorage.getItem('token')
-                                    ? <BtnLoggedIn name={localStorage.getItem('nombre')} />
+                                    ? <BtnLoggedIn name={user?.persona?.nombre} />
                                     : <Link className={style.nav_icon} to={''} onClick={() => setShow(!show)}><BsPerson /></Link>
                             }
                             <Link
