@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE } from './action-type';
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, } from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -76,3 +76,16 @@ export const sortProducts = (orderBy) => {
         payload: orderBy,
     };
 };
+
+
+export const userRegister = (formData) => async () => {
+    console.log(formData);
+    try {
+        const response = await axios.post('/usuarios', formData);
+        console.log(response.data);
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+

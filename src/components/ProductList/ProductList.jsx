@@ -69,7 +69,8 @@ const ProductList = () => {
   return (
     <>
       <NavBar />
-      <div className="product-list">
+      <div className="product-list container">
+
         <aside className='menu_search'>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="0">

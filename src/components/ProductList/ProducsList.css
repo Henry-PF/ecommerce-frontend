@@ -61,7 +61,7 @@
 }
 
 .product-list ul {
-
+  padding: 0;
   gap: 8px;
   padding: 0 15px;
 }
@@ -80,12 +80,13 @@
   /* Centra verticalmente el contenido dentro del contenedor */
   background-color: #fff;
   text-decoration: none;
-  transition: all .2s;
+  transition: all .3s;
 }
 
 
 
 .product-item:hover {
+  box-shadow: 1px 1px 5px var(--primary);
   transform: translateY(1px);
   border: 1px solid var(--primary);
 }
@@ -174,10 +175,9 @@
 }
 
 .menu_search {
-  width: 250px;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .accordion-header {

@@ -5,6 +5,7 @@ const initialState = {
     categories: [],
     filters: [],
     reviews: [],
+    user: {},
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -51,6 +52,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: sortedRecipes,
             };
+
         default:
             return state;
     }
