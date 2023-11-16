@@ -9,7 +9,9 @@ import AboutUs from './components/LandingPage/About_Us/AboutUs';
 import Register from './components/Register/Register';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import UserPanel from './components/UserPanel/UserPanel'
+import Carrito from './components/Carrito/Carrito';
 import './App.css'
+
 axios.defaults.baseURL = 'http://localhost:3002/api'
 
 
@@ -23,6 +25,7 @@ function App() {
         <Route path="/product_detail/:id" element={<Details />} />
         <Route path='/product_list' element={<ProductList />} />
         <Route path='/about_us' element={<AboutUs />} />
+        <Route path='/carrito' element={<Carrito />}/>
         <Route path='/register' element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path='settings/user' element={<UserPanel />} />
