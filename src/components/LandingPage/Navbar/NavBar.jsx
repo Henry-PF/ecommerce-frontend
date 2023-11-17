@@ -16,6 +16,7 @@ const NavBar = () => {
 
     const [show, setShow] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
+    const [showSCart, setShowSCart] = useState(false);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
     const [user, setUser] = useState(null)
@@ -26,6 +27,10 @@ const NavBar = () => {
 
     const toggleFavorites = () => {
         setShowFavorites(!showFavorites);
+    };
+
+    const toggleCart = ()=>{
+        setShowSCart(!showSCart);
     };
 
     const handleSubmit = (event) => {
@@ -82,7 +87,7 @@ const NavBar = () => {
                         </form>
                         <div className={style.nav_icons}>
                             <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
-                            <Link className={style.nav_icon} to={''}><BsBag /></Link>
+                            <Link className={style.nav_icon} to={''} onClick={() => setShowSCart(!showSCart)}><BsBag /></Link>
 
                             {
                                 localStorage.getItem('token')

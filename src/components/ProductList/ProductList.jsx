@@ -68,7 +68,38 @@ const ProductList = () => {
       } else {
         Swal.fire({
           title: data.message,
+          icon: 'warning'
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleAddCart = async (product) => {
+    try {
+      const carrito = await axios.get(`/carrito/${localStorage.getItem('id')}`)
+      if(!carrito)
+        await axios.post('/carrito/', {
+          userId: localStorage.getItem('id'),
+          productId: product.id,
+        });
+
+      const { data } = await axios.post('/carrito/addItem', {
+        userId: localStorage.getItem('id'),
+        productId: product.id,
+      });
+      if (!data.error) {
+        Swal.fire({
+          title: data.message,
           icon: 'success'
+        }).then(() => {
+          setShow(!show)
+        })
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: 'warning'
         })
       }
     } catch (error) {
@@ -160,7 +191,7 @@ const ProductList = () => {
                     <VscDebugBreakpointLog className='icon-diamont' />
                     <span className='product-shipping'>Envio Gratis</span>
                   </p> */}
-                  <button type='button' className='btn_cart'><BsBag />Añadir al Carrito</button>
+                  <button type='button' className='btn_cart' onClick={() => handleAddCart(product)}><BsBag />Añadir al Carrito</button>
                   <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart />Añadir a Favoritos</button>
                   <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BiDetail />Ver Detalle</a>
                 </div>

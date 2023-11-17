@@ -71,8 +71,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 carrito: action.payload,
             };
-
-            }
+            
         case GET_FAVORITES:
             return {
                 ...state,
