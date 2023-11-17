@@ -1,6 +1,6 @@
 
 // reducer.js
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_CARRITO, ACTUALIZAR_CARRITO ,GET_FAVORITES} from "./action-type";
+import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_CARRITO, ACTUALIZAR_CARRITO, GET_FAVORITES } from "./action-type";
 
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
     reviews: [],
     user: {},
 
-    carrito: [], 
+    carrito: [],
 
     favorites: [],
 
@@ -71,14 +71,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 carrito: action.payload,
             };
-
-            }
         case GET_FAVORITES:
             return {
                 ...state,
                 favorites: action.payload
             }
-
         default:
             return state;
     }
