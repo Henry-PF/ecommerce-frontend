@@ -61,7 +61,7 @@
 }
 
 .product-list ul {
-
+  padding: 0;
   gap: 8px;
   padding: 0 15px;
 }
@@ -71,21 +71,20 @@
   width: 100%;
   min-height: 200px;
   margin-bottom: 8px;
-
   border: 1px solid var(--secondary);
   border-radius: 6px;
   display: flex;
   /* Usa flexbox para organizar el contenido */
-  align-items: flex-start;
   /* Centra verticalmente el contenido dentro del contenedor */
   background-color: #fff;
   text-decoration: none;
-  transition: all .2s;
+  transition: all .3s;
 }
 
 
 
 .product-item:hover {
+  box-shadow: 1px 1px 5px var(--primary);
   transform: translateY(1px);
   border: 1px solid var(--primary);
 }
@@ -140,10 +139,11 @@
 }
 
 .product-price {
+  font-size: 2em;
   font-weight: 600;
-  color: #393e46;
+  color: var(--primary);
   background-color: #fff;
-  margin: 0;
+  margin-bottom: 10px;
 }
 
 .product-stock {
@@ -169,15 +169,14 @@
 }
 
 .product-description {
-  font-size: 1em;
+  font-size: .8em;
   color: #393E46;
 }
 
 .menu_search {
-  width: 250px;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .accordion-header {
@@ -203,17 +202,63 @@
   text-align: center;
 }
 
-.btn_fav {
-  width: 50px;
-  height: 50px;
-  color: rgba(255, 0, 0, 0.386);
-  font-size: 2em;
-  border: none;
+.btn_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 300px;
+  margin-right: 5px;
+  height: 200px;
+  padding: 10px 0;
+}
+
+.btn_fav,
+.btn_cart,
+.btn_detail {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  width: 100%;
+  padding: 5px 10px;
+  height: auto;
+  font-size: 1em;
   background-color: transparent;
   transition: all .3s ease;
+  border: none;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.btn_cart {
+  background-color: var(--primary);
+  color: white;
+  transition: all .3s;
+}
+
+.btn_cart:hover {
+  color: white;
+  background-color: #393E46;
+}
+
+.btn_fav {
+  background-color: rgb(167, 45, 45);
+  color: white;
+  transition: all .3s;
 }
 
 .btn_fav:hover {
-  color: rgba(255, 0, 0, 0.712);
+  color: white;
+  background-color: rgb(213, 43, 43);
+}
 
+.btn_detail {
+  background-color: rgb(68, 68, 255);
+  color: white;
+  transition: all .3s;
+}
+
+.btn_detail:hover {
+  color: white;
+  background-color: rgb(40, 40, 251);
 }
