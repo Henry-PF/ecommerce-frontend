@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, } from './action-type';
+
+import { GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES} from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -60,6 +61,7 @@ export const getTestimonials = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get('/reviews');
+            console.log(data);
             dispatch({
                 type: GET_TESTIMONIALS,
                 payload: data
@@ -79,7 +81,6 @@ export const sortProducts = (orderBy) => {
 
 
 export const userRegister = (formData) => async () => {
-    console.log(formData);
     try {
         const response = await axios.post('/usuarios', formData);
         console.log(response.data);
@@ -118,4 +119,24 @@ export const getCarrito = (userId) => {
     };
   };
   
+
+export const getFavorites = (id) => async (dispatch) => {
+    try {
+        const { data } = await axios.get(`/favoritos/${id}`);
+        dispatch({
+            type: GET_FAVORITES,
+            payload: data.data
+        })
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const deleteFavorite = (datos) => async () => {
+    try {
+        const { data } = await axios.post('/favoritos/delete', datos);
+    } catch (error) {
+        console.error(error);
+    }
+}
 

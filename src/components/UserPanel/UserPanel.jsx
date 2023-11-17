@@ -6,8 +6,10 @@ import { LuUserCog } from "react-icons/lu";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiMenu2Line } from "react-icons/ri";
 import { BsBagCheck, BsPersonGear } from "react-icons/bs";
+import { FaRegStar } from "react-icons/fa";
 import UserData from './UserData/UserData';
 import UserShopping from './UserShopping/UserShopping';
+import UserReview from './UserReview/UserReview';
 
 
 
@@ -21,6 +23,9 @@ const UserPanel = () => {
 
     const handleShopping = () => {
         setActiveComponent('shopping');
+    };
+    const handleReview = () => {
+        setActiveComponent('review');
     };
 
     return (
@@ -42,8 +47,8 @@ const UserPanel = () => {
                             <Link to={''} className={style.nav_link} onClick={handleShopping}> Mis Compras <IoIosArrowForward className={style.icon_arrow} /></Link>
                         </div>
                         <div className={style.nav_section}>
-                            <label className={style.icon_container}><LuUserCog className={style.link_icon} /></label>
-                            <Link to={''} className={style.nav_link}> Mi Perfil <IoIosArrowForward className={style.icon_arrow} /></Link>
+                            <label className={style.icon_container}><FaRegStar className={style.link_icon} /></label>
+                            <Link to={''} className={style.nav_link} onClick={handleReview}> Review <IoIosArrowForward className={style.icon_arrow} /></Link>
                         </div>
                         <div className={style.nav_section}>
                             <label className={style.icon_container}><LuUserCog className={style.link_icon} /></label>
@@ -54,6 +59,7 @@ const UserPanel = () => {
                 <div className={style.panel_container}>
                     {activeComponent === 'profile' && <UserData />}
                     {activeComponent === 'shopping' && <UserShopping />}
+                    {activeComponent === 'review' && <UserReview />}
                 </div>
             </div>
         </>
