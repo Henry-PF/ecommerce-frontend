@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES } from './action-type';
+
+import { GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES} from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -88,6 +89,36 @@ export const userRegister = (formData) => async () => {
         console.error(error);
     }
 };
+export const getCarrito = (userId) => {
+    return async (dispatch) => {
+      try {
+        const { data } = await axios.get(`/carrito/${userId}`);
+        console.log('Datos del carrito recibidos:', data);
+        dispatch({
+          type: GET_CARRITO,
+          payload: data.data,
+        });
+      } catch (error) {
+        console.error('Error al obtener el carrito:', error);
+      }
+    };
+  };
+  
+  export const actualizarCarrito = (userId, carritoActualizado) => {
+    return async (dispatch) => {
+      try {
+        await axios.put(`/carrito/${userId}`, { carrito: carritoActualizado });
+        console.log('Carrito actualizado:', carritoActualizado);
+        dispatch({
+          type: ACTUALIZAR_CARRITO,
+          payload: carritoActualizado,
+        });
+      } catch (error) {
+        console.error('Error al actualizar el carrito:', error);
+      }
+    };
+  };
+  
 
 export const getFavorites = (id) => async (dispatch) => {
     try {
