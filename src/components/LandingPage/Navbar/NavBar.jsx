@@ -8,18 +8,24 @@ import style from './style.module.css'
 import Login from './Login/Login'
 import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
 import axios from 'axios'
+import Favorites from '../Favorites/Favorites'
 
 const NavBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
+    const [showFavorites, setShowFavorites] = useState(false);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
     const [user, setUser] = useState(null)
 
     const toggleLogin = () => {
         setShow(!show);
+    };
+
+    const toggleFavorites = () => {
+        setShowFavorites(!showFavorites);
     };
 
     const handleSubmit = (event) => {
@@ -40,14 +46,12 @@ const NavBar = () => {
             localStorage.setItem('token', token);
             localStorage.setItem('id', parsedUser.id);
             localStorage.setItem('nombre', parsedUser.usuario);
-
-
         }
+
         const fetchUser = async () => {
             try {
                 const { data } = await axios.get(`/usuarios/${localStorage.getItem('id')}`);
-                console.log(data);
-                setUser(data.data);
+                setUser(data.data)
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error);
             }
@@ -58,9 +62,6 @@ const NavBar = () => {
         const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
     }, []);
-
-    console.log(user);
-
 
     return (
         <>
@@ -80,7 +81,7 @@ const NavBar = () => {
                             <button className={style.btn_search} type='submit'><BsSearch /></button>
                         </form>
                         <div className={style.nav_icons}>
-                            <Link className={style.nav_icon} to={''}><BsHeart /></Link>
+                            <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
                             <Link className={style.nav_icon} to={''}><BsBag /></Link>
 
                             {
@@ -106,6 +107,7 @@ const NavBar = () => {
                 </div >
             </nav>
             <Login show={show} toggleLogin={toggleLogin} />
+            <Favorites show={showFavorites} toggleFavorites={toggleFavorites} />
         </>
     )
 }
