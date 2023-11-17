@@ -19,16 +19,6 @@ const Reviews = () => {
     }, [dispatch]);
 
 
-    // Enviar revision al back
-    const handleReviewSubmit = (reviewData) => {
-        console.log('Nueva revisión:', reviewData);
-    };
-
-    // Enviar reporte al back
-    const handleReportSubmit = (reportData) => {
-        console.log('Nuevo reporte:', reportData);
-      };
-
     return (
         <>
             <div className='container'>
