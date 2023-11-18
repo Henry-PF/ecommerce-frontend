@@ -9,11 +9,8 @@ const initialState = {
     filters: [],
     reviews: [],
     user: {},
-
     carrito: [],
-
     favorites: [],
-
 }
 
 const rootReducer = (state = initialState, action) => {

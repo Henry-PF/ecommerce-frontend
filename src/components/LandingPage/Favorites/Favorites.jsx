@@ -15,7 +15,7 @@ const Favorites = (props) => {
     const dispatch = useDispatch()
     const favorites = useSelector(state => state.favorites)
     // const [favorites, setFavorites] = useState(null);
-
+    console.log(favorites);
     const handleDelete = async (id) => {
         const datos = {
             userId: parseInt(localStorage.getItem('id')),
@@ -37,7 +37,7 @@ const Favorites = (props) => {
     }
 
     useEffect(() => {
-        dispatch(getFavorites(localStorage.getItem('id')))
+        if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
     }, [dispatch, props, Swal, datos]);
 
     return (

@@ -42,10 +42,10 @@ const NavBar = () => {
 
         if (userData) {
             const parsedUser = JSON.parse(userData);
-            console.log(parsedUser);
             localStorage.setItem('token', token);
             localStorage.setItem('id', parsedUser.id);
             localStorage.setItem('nombre', parsedUser.usuario);
+            localStorage.setItem('nombre', parsedUser.carritos[0].id);
         }
 
         const fetchUser = async () => {
