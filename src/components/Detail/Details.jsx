@@ -3,18 +3,20 @@ import styles from './Details.module.css';
 import NavBar from '../LandingPage/Navbar/NavBar';
 import Footer from '../LandingPage/Footer/Footer';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getAllProducts } from '../../redux/actions';
 import axios from 'axios';
 import { BsCheck2 } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
+import { agregarAlCarrito } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
 
 export default function Details() {
-  const { id } = useParams(); // Obtén el ID del producto utilizando useParams
-
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem('id');
+  const idCarrito = localStorage.getItem('id_carrito'); // Asegúrate de tener esto disponible
   const [product, setProduct] = useState({});
+  const subtotal = product.precio
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,13 +30,16 @@ export default function Details() {
 
     fetchData();
   }, [id]);
+  const handleAddToCart = () => {
+    const cantidad = 1;
+    dispatch(agregarAlCarrito(userId, id, cantidad, idCarrito, subtotal)); // Pasa idCarrito a la acción
+  };
 
   return (
     <>
       <NavBar />
       <div className={styles.divContenido}>
         <div className={styles.container}>
-
           <div className={styles.divFoto}>
             <img className={styles.imagen} src={product?.img_productos?.[0]?.url} alt="img" />
           </div>
@@ -53,15 +58,12 @@ export default function Details() {
           </div>
           <div className={styles.divPanelDeCompra}>
             <div className={styles.divBotoneraCompra}>
-              <button className={styles.botonCarrito}>Añadir al Carrito</button>
+              <button className={styles.botonCarrito} onClick={handleAddToCart}>Añadir al Carrito</button>
               <button className={styles.botonFavorito}>Favoritos</button>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className={styles.divDetalles}>
-        <div className={styles.infoDetalles}>información precisa del producto</div>
-      </div> */}
       <Newsletter />
       <Footer />
     </>
