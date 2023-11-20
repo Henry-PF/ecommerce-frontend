@@ -83,7 +83,7 @@
 }
 
 .product-item:hover .btn_container {
-  bottom: 0;
+  transform: translateY(0);
 }
 
 .product-card {
@@ -212,7 +212,8 @@
 
 .btn_container {
   position: absolute;
-  bottom: -100px;
+  bottom: 0px;
+  transform: translateY(100px);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -49,6 +49,7 @@ const Login = (props) => {
             const parsedUser = JSON.parse(userData);
             localStorage.setItem('token', token);
             localStorage.setItem('id', parsedUser.id);
+            localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
         };
     }, [])
 

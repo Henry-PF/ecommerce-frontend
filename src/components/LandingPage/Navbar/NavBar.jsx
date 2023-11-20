@@ -82,7 +82,7 @@ const NavBar = () => {
                         </form>
                         <div className={style.nav_icons}>
                             <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
-                            <Link className={style.nav_icon} to={''}><BsBag /></Link>
+                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link>
 
                             {
                                 localStorage.getItem('token')

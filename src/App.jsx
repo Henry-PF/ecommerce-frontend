@@ -25,7 +25,7 @@ function App() {
         <Route path="/product_detail/:id" element={<Details />} />
         <Route path='/product_list' element={<ProductList />} />
         <Route path='/about_us' element={<AboutUs />} />
-        <Route path='/carrito' element={<Carrito />}/>
+        <Route path='/cart' element={<Carrito />} />
         <Route path='/register' element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path='settings/user' element={<UserPanel />} />
