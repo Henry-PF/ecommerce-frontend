@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES} from './action-type';
+import { ELIMINAR_DEL_CARRITO, AGREGAR_AL_CARRITO, GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES} from './action-type';
 
 export const getAllProducts = (page) => {
     return async (dispatch) => {
@@ -118,7 +118,30 @@ export const getCarrito = (userId) => {
       }
     };
   };
+  export const agregarAlCarrito = (userId, productId, cantidad, idCarrito, subtotal) => async (dispatch) => {
+    try {
+      const response = await axios.post('/carrito/addItem', { id_usuario: userId, id_producto: productId, cantidad, id_carrito: idCarrito, subtotal,});
+      dispatch({
+        type: AGREGAR_AL_CARRITO,
+        payload: response.data.data,
+      });
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+    }
+  };
   
+  export const eliminarDelCarrito = (userId, productId) => async (dispatch) => {
+    try {
+      const response = await axios.post('/carrito/delete', { id_usuario: userId, id_producto: productId });
+      console.log('Respuesta del servidor:', response.data);
+      dispatch({
+        type: ELIMINAR_DEL_CARRITO,
+        payload: response.data.data,
+      });
+    } catch (error) {
+      console.error('Error al eliminar del carrito:', error);
+    }
+  };
 
 export const getFavorites = (id) => async (dispatch) => {
     try {

@@ -1,0 +1,49 @@
+.carrito-container {
+    width: 880px
+    height: 552px
+    top: 168px
+    left: 130px
+    border-radius: 6px
+    border: 1px
+    
+    
+  }
+  
+  .carrito-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .productos-container {
+    width: 840px
+    block-size: 136px
+    top: 347px
+    left: 149px
+    border: 0px, 0px, 1px, 0px
+  }
+  
+  .producto-item {
+    flex: 1 1 calc(33.33% - 20px); /* Para que haya 3 cartas por fila con margen entre ellas */
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+  }
+  
+  .acciones-carrito {
+    margin-top: 20px;
+  }
+  
+  .acciones-carrito button {
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #00B517;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .acciones-carrito button:hover {
+    background-color: #0056b3;
+  }
+  
