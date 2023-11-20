@@ -1,3 +1,4 @@
+
 import {ELIMINAR_DEL_CARRITO, AGREGAR_AL_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_CARRITO, ACTUALIZAR_CARRITO } from "./action-type";
 
 const initialState = {
@@ -6,7 +7,8 @@ const initialState = {
     filters: [],
     reviews: [],
     user: {},
-    carrito: [], 
+    carrito: [],
+    favorites: [],
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -48,7 +50,6 @@ const rootReducer = (state = initialState, action) => {
                 default:
                     return { ...state, };
             }
-
             return {
                 ...state,
                 products: sortedProducts,
@@ -68,15 +69,18 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 carrito: action.payload,
             };
-            
         case ELIMINAR_DEL_CARRITO:
         return {
           ...state,
           carrito: action.payload.data,
-    productId: action.payload.id_producto,        
+          productId: action.payload.id_producto,        
         };
 
-
+        case GET_FAVORITES:
+            return {
+                ...state,
+                favorites: action.payload
+            }
         default:
             return state;
     }

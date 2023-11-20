@@ -2,8 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Offcanvas } from 'react-bootstrap'
-import { BsBagPlus } from "react-icons/bs";
-import { RxCross2 } from "react-icons/rx";
+import { BsBagPlus, BsTrash3 } from "react-icons/bs";
 import style from './style.module.css'
 import { deleteFavorite, getFavorites } from '../../../redux/actions';
 import Swal from 'sweetalert2';
@@ -12,9 +11,30 @@ const Favorites = (props) => {
 
     const [datos, setDatos] = useState()
 
-    const dispatch = useDispatch()
-    const favorites = useSelector(state => state.favorites)
-    // const [favorites, setFavorites] = useState(null);
+    const dispatch = useDispatch();
+    const favorites = useSelector(state => state.favorites);
+
+    const handleCart = async (cart) => {
+        const dataCart = {
+            id_usuario: cart.id_usuario,
+            cantidad: 1,
+            subtotal: cart.producto.precio,
+            id_carrito: localStorage.getItem('id_carrito'),
+            id_producto: cart.id_producto,
+        }
+        try {
+            const { data } = await axios.post('/carrito/addItem', dataCart);
+            if (!data.error) {
+                handleDelete(cart.id_producto)
+                Swal.fire({
+                    title: 'Se añadio el producto al carrito',
+                    icon: 'success'
+                })
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleDelete = async (id) => {
         const datos = {
@@ -24,10 +44,10 @@ const Favorites = (props) => {
         try {
             const { data } = await axios.post('/favoritos/delete', datos);
             if (!data.error) {
-                Swal.fire({
-                    title: data.message,
-                    icon: 'success'
-                })
+                // Swal.fire({
+                //     title: data.message,
+                //     icon: 'success'
+                // })
                 setDatos(data)
             }
 
@@ -37,7 +57,7 @@ const Favorites = (props) => {
     }
 
     useEffect(() => {
-        dispatch(getFavorites(localStorage.getItem('id')))
+        if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
     }, [dispatch, props, Swal, datos]);
 
     return (
@@ -58,8 +78,8 @@ const Favorites = (props) => {
                                         <p>$ {fav.producto.precio}</p>
                                     </div>
                                     <div className={style.btn_container}>
-                                        <button className={style.btn} onClick={() => handleDelete(fav.producto.id)}><RxCross2 /></button>
-                                        <button className={style.btn}><BsBagPlus /></button>
+                                        <button className={style.btn} onClick={() => handleCart(fav)}><BsBagPlus className={style.btn_icon} /></button>
+                                        <button className={style.btn} onClick={() => handleDelete(fav.producto.id)}><BsTrash3 className={style.btn_icon} /></button>
                                     </div>
                                 </div>
                             </div>

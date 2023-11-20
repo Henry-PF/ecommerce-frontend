@@ -12,7 +12,7 @@ import { Accordion } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import { BiDetail } from "react-icons/bi";
-import { BsBag } from "react-icons/bs";
+import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Favorites from '../LandingPage/Favorites/Favorites';
@@ -68,6 +68,28 @@ const ProductList = () => {
       } else {
         Swal.fire({
           title: data.message,
+          icon: 'success'
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleCart = async (product) => {
+    console.log(product);
+    const dataCart = {
+      id_usuario: localStorage.getItem('id'),
+      cantidad: 1,
+      subtotal: product.precio,
+      id_carrito: localStorage.getItem('id_carrito'),
+      id_producto: product.id,
+    }
+    try {
+      const { data } = await axios.post('/carrito/addItem', dataCart);
+      if (!data.error) {
+        Swal.fire({
+          title: 'Se añadio el producto al carrito',
           icon: 'success'
         })
       }
@@ -135,34 +157,31 @@ const ProductList = () => {
             </Accordion.Item>
           </Accordion>
         </aside>
+
         {(searchActive || (products.data && products.data.length > 0)) && (
           <ul>
             {products.data?.map((product) => (
               <div key={product.id} className="product-item">
-                <a href={`/product_detail/${product.id}`} className='product-card'>
-                  <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                <div href={`/product_detail/${product.id}`} className='product-card'>
+                  <picture>
+                    <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                    <div className='btn_container'>
+                      <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                      <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                      <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></a>
+                    </div>
+                  </picture>
                   <div className="product-info">
                     <h3>{product.nombre}</h3>
                     <p className='product_category'>{product.categorium?.nombre}</p>
-                    {/* <h4 className='product-price'>$ {product.precio}</h4> */}
-                    <p className='product-orders'>
+                    <h4 className='product-price'>$ {product.precio}</h4>
+                    {/* <p className='product-orders'>
                       <span className='product-stock'>{`${product.stock} en Stock`}</span>
                       <VscDebugBreakpointLog className='icon-diamont' />
                       <span className='product-shipping'>Envio Gratis</span>
-                    </p>
-                    <p className='product-description'>{product.descripcion}</p>
+                    </p> */}
+                    {/* <p className='product-description'>{product.descripcion}</p> */}
                   </div>
-                </a>
-                <div className='btn_container'>
-                  <h4 className='product-price'>$ {product.precio}</h4>
-                  {/* <p className='product-orders'>
-                    <span className='product-stock'>{`${product.stock} en Stock`}</span>
-                    <VscDebugBreakpointLog className='icon-diamont' />
-                    <span className='product-shipping'>Envio Gratis</span>
-                  </p> */}
-                  <button type='button' className='btn_cart'><BsBag />Añadir al Carrito</button>
-                  <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart />Añadir a Favoritos</button>
-                  <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BiDetail />Ver Detalle</a>
                 </div>
               </div>
             ))}
