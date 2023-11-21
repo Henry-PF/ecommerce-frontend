@@ -6,30 +6,35 @@ import NavBar from '../LandingPage/Navbar/NavBar'
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Importa Link
 import styles from './carrito.module.css';
+import { FaPaypal } from "react-icons/fa";
 
 const Carrito = () => {
   const dispatch = useDispatch();
+
   const userId = parseInt(localStorage.getItem('id'));
   const idCarrito = parseInt(localStorage.getItem('id_carrito'));
-  console.log(idCarrito);
+
   const carrito = useSelector(state => state.carrito);
+  console.log(carrito);
   const [updateValue, setUpdateValue] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getCarrito(userId, idCarrito));
-    }
+    const fetchData = async () => {
+      if (userId) {
+        setIsLoading(true);
+        try {
+          await dispatch(getCarrito(userId, idCarrito));
+          setIsLoading(false);
+        } catch (error) {
+          console.error('Error al obtener el carrito:', error);
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
   }, [dispatch, userId, idCarrito, updateValue]);
-
-  const handleEliminarItem = (itemId) => {
-    // Lógica para eliminar el item con el ID específico
-    const carritoActualizado = carrito.filter(item => item.id !== itemId);
-    handleActualizarCarrito(carritoActualizado);
-  };
-
-  const handleActualizarCarrito = (carritoActualizado) => {
-    dispatch(actualizarCarrito(userId, carritoActualizado, idCarrito));
-  };
 
   const handlePayButtonClick = async () => {
     try {
@@ -38,7 +43,8 @@ const Carrito = () => {
         return;
       }
       const response = await axios.post('/pago/create-order', { id_user: userId, id_carrito: idCarrito });
-      window.open(`https://www.paypal.com/checkoutnow?token=${response.data.order_id}`, '_blank');
+      console.log(response);
+      // window.open(`https://www.paypal.com/checkoutnow?token=${response.data.order_id}`, '_blank');
     } catch (error) {
       console.error('Error al iniciar el pago:', error);
     }
@@ -104,46 +110,66 @@ const Carrito = () => {
   return (
     <>
       <NavBar />
-      <h2>Carrito de Compras</h2>
-      <div className={styles.container}>
-        {carrito.length > 0 && carrito[0]?.detalle_carritos?.length > 0 ? (
-          carrito[0]?.detalle_carritos?.map(item => (
-            <div key={item.id} className={styles.product_item}>
-              <picture className={styles.product_img}>
-                <img src={item.producto.img_productos[0].url} alt="" />
-              </picture>
-              <div className={styles.product_name}>
-                <p>{item.producto?.nombre}</p>
+      <div className='container'>
+        <h2>Carrito de Compras</h2>
+        <div className={styles.container}>
+          {
+            (carrito[0]?.detalle_carritos?.map(item => (
+              console.log(item),
+              <div key={item.id} className={styles.product_item}>
+                <picture className={styles.product_img}>
+                  <img src={item.producto.img_productos[0].url} alt="" />
+                </picture>
+                <div className={styles.product_name}>
+                  <p>{item.producto?.nombre}</p>
+                </div>
+                <div>
+                  <p className={styles.product_title}>Valor</p>
+                  <p className={styles.product_price}>$ {item.producto.precio}</p>
+                </div>
+                <div className={styles.product_input_container}>
+                  <p className={styles.product_title}>Cantidad</p>
+                  <div className={styles.product_input}>
+                    <button className={styles.btn_product} onClick={() => handleRemoveItem(item)}>{item.cantidad == 1 ? <BsTrash3 className={styles.btn_icon_trash} /> : <BsDash className={styles.btn_icon} />}</button>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      value={item.cantidad}
+                      disabled
+                    />
+                    <button className={styles.btn_product} onClick={() => handleAddItem(item)}><BsPlusLg className={styles.btn_icon} /></button>
+                  </div>
+                </div>
+                <div>
+                  <p className={styles.product_title}>SubTotal</p>
+                  <p className={styles.product_price}>$ {item.subtotal}</p>
+                </div>
+                <button className={styles.btn_delete} onClick={() => handleDelete(item)}><BsTrash3 className={styles.icon_delete} /></button>
               </div>
-              <div className={styles.product_input}>
-                <button className={styles.btn_product} onClick={() => handleRemoveItem(item)}>{item.cantidad == 1 ? <BsTrash3 className={styles.btn_icon_trash} /> : <BsDash className={styles.btn_icon} />}</button>
-                <input
-                  className={styles.input}
-                  type="text"
-                  value={item.cantidad}
-                  disabled
-                />
-                <button className={styles.btn_product} onClick={() => handleAddItem(item)}><BsPlusLg className={styles.btn_icon} /></button>
-              </div>
-              <p className={styles.product_price}>$ {item.subtotal}</p>
-              <button className={styles.btn_delete} onClick={() => handleDelete(item)}><BsTrash3 className={styles.icon_delete} /></button>
+            )))
+          }
+          <div className={styles.cart_payment}>
+            <h4>Detalle</h4>
+            <div className={styles.cart_info}>
+              <span className={styles.cart_products}>
+                Cant. de productos
+              </span>
+              <span className={styles.cart_products}>
+                {carrito[0]?.detalle_carritos.reduce((acc, item) => acc + parseInt(item.cantidad), 0)}
+              </span>
+              <span className={styles.cart_total_title}>
+                Total
+              </span>
+              <span className={styles.cart_total}>
+                $ {carrito[0]?.total}
+              </span>
             </div>
-          ))
-        ) : (
-          <p>No hay productos en el carrito</p>
-        )}
-
-        <div className="acciones-carrito">
-          {carrito.length > 0 && carrito[0]?.detalle_carritos?.length > 0 ? (
-            <>
-              <button onClick={handlePayButtonClick}>
-                Pagar con PayPal
+            <div>
+              <button className={styles.btn_paypal} onClick={handlePayButtonClick}>
+                Pagar con <FaPaypal /> PayPal
               </button>
-              <Link to="/">Volver al Home</Link>
-            </>
-          ) : (
-            <p>El carrito está vacío</p>
-          )}
+            </div>
+          </div>
         </div>
       </div>
     </>
