@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserShopping = () => {
     return (
-        <div>UserShopping</div>
+        <div>Proximamente...</div>
     )
 }
 
