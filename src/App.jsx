@@ -22,13 +22,13 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/CreateProducts' element={<CreateProduct />} />
-        <Route path="/product_detail/:id" element={<Details />} />
-        <Route path='/product_list' element={<ProductList />} />
-        <Route path='/about_us' element={<AboutUs />} />
-        <Route path='/cart' element={<Carrito />} />
-        <Route path='/register' element={<Register />} />
+        <Route exact path="/product_detail/:id" element={<Details />} />
+        <Route exact path='/product_list' element={<ProductList />} />
+        <Route exact path='/about_us' element={<AboutUs />} />
+        <Route exact path='/cart' element={<Carrito />} />
+        <Route exact path='/register' element={<Register />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path='settings/user' element={<UserPanel />} />
+          <Route exact path='settings/user' element={<UserPanel />} />
         </Route>
       </Routes >
     </div>
