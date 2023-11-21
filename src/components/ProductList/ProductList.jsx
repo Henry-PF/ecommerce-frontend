@@ -11,7 +11,11 @@ import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from 
 import { Accordion } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import { BiDetail } from "react-icons/bi";
+import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
+import Swal from 'sweetalert2';
+import Favorites from '../LandingPage/Favorites/Favorites';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -27,6 +31,7 @@ const ProductList = () => {
   const [precioMin, setPrecioMin] = useState('');
   const [totalPages, setTotalPages] = useState(1);
   const [sortPrice, setSortPrice] = useState('');
+  const [show, setShow] = useState(false);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -42,6 +47,56 @@ const ProductList = () => {
       setSelectedCategories([...selectedCategories, checkboxValue]);
     }
   };
+
+  const toggleFavorites = () => {
+    setShow(!show)
+  }
+
+  const handleAddFav = async (product) => {
+    try {
+      const { data } = await axios.post('/favoritos', {
+        userId: localStorage.getItem('id'),
+        productId: product.id,
+      })
+      if (!data.error) {
+        Swal.fire({
+          title: data.message,
+          icon: 'success'
+        }).then(() => {
+          setShow(!show)
+        })
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: 'success'
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleCart = async (product) => {
+    console.log(product);
+    const dataCart = {
+      id_usuario: localStorage.getItem('id'),
+      cantidad: 1,
+      subtotal: product.precio,
+      id_carrito: localStorage.getItem('id_carrito'),
+      id_producto: product.id,
+    }
+    try {
+      const { data } = await axios.post('/carrito/addItem', dataCart);
+      if (!data.error) {
+        Swal.fire({
+          title: 'Se añadio el producto al carrito',
+          icon: 'success'
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -69,7 +124,8 @@ const ProductList = () => {
   return (
     <>
       <NavBar />
-      <div className="product-list">
+      <div className="product-list container">
+
         <aside className='menu_search'>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="0">
@@ -77,7 +133,7 @@ const ProductList = () => {
               <Accordion.Body className='accordion_body'>
                 {
                   categories?.map(category => (
-                    <div>
+                    <div key={category.id}>
                       <input
                         type="checkbox"
                         name={category.nombre}
@@ -92,7 +148,6 @@ const ProductList = () => {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header>Precio</Accordion.Header>
@@ -101,54 +156,38 @@ const ProductList = () => {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-          {/* <Accordion defaultActiveKey={['0']} alwaysOpen>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Ordenar</Accordion.Header>
-              <Accordion.Body className='accordion_price'>
-                <select name="" id=""
-                  onChange={(event) => setSortPrice(event.target.value)}
-                >
-                  <option value="price_asc">Mas Caro</option>
-                  <option value="price_desc">Mas Barato</option>
-                </select>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion> */}
         </aside>
 
         {(searchActive || (products.data && products.data.length > 0)) && (
           <ul>
             {products.data?.map((product) => (
-              <div className="product-item">
-                <a key={product.id} href={`/product_detail/${product.id}`} className='product-card'>
-                  <img src={product.img_productos[0]?.url} alt={product.nombre} />
+              <div key={product.id} className="product-item">
+                <div href={`/product_detail/${product.id}`} className='product-card'>
+                  <picture>
+                    <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                    <div className='btn_container'>
+                      <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                      <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                      <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></a>
+                    </div>
+                  </picture>
                   <div className="product-info">
                     <h3>{product.nombre}</h3>
                     <p className='product_category'>{product.categorium?.nombre}</p>
                     <h4 className='product-price'>$ {product.precio}</h4>
-                    <p className='product-orders'>
+                    {/* <p className='product-orders'>
                       <span className='product-stock'>{`${product.stock} en Stock`}</span>
                       <VscDebugBreakpointLog className='icon-diamont' />
                       <span className='product-shipping'>Envio Gratis</span>
-                    </p>
-                    <p className='product-description'>{product.descripcion}</p>
+                    </p> */}
+                    {/* <p className='product-description'>{product.descripcion}</p> */}
                   </div>
-                </a>
-                <button type='button' className='btn_fav'><BsHeart /></button>
+                </div>
               </div>
             ))}
           </ul>
         )}
       </div>
-      {/* <div className="pagination-buttons">
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-          <AiOutlineArrowLeft />
-        </button>
-        <span> {currentPage}</span>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={products.length < 10}>
-          <AiOutlineArrowRight />
-        </button>
-      </div> */}
       <ReactPaginate
         previousLabel={<AiOutlineArrowLeft className='pagination-icon' />}
         nextLabel={<AiOutlineArrowRight className='pagination-icon' />}
@@ -163,6 +202,7 @@ const ProductList = () => {
       />
       <Newsletter />
       <Footer />
+      <Favorites show={show} toggleFavorites={toggleFavorites} />
     </>
   );
 };
