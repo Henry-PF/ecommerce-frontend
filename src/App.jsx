@@ -12,7 +12,7 @@ import UserPanel from './components/UserPanel/UserPanel'
 import Carrito from './components/Carrito/Carrito';
 import './App.css'
 
-axios.defaults.baseURL = 'https://backend-dev-jnpc.1.us-1.fl0.io/'
+axios.defaults.baseURL = 'https://backend-dev-jnpc.1.us-1.fl0.io/api'
 
 
 
