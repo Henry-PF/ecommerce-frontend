@@ -44,7 +44,7 @@ const Carrito = () => {
       }
       const response = await axios.post('/pago/create-order', { id_user: userId, id_carrito: idCarrito });
       console.log(response);
-      // window.open(`https://www.paypal.com/checkoutnow?token=${response.data.order_id}`, '_blank');
+      window.open(`${response?.data?.links[1].href}`);
     } catch (error) {
       console.error('Error al iniciar el pago:', error);
     }
