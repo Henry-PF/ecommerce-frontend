@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import {React,  useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Offcanvas } from 'react-bootstrap'
 import { BsBagPlus, BsTrash3 } from "react-icons/bs";

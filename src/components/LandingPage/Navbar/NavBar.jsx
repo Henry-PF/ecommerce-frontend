@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import {React,  useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { BsBag, BsHeart, BsPerson, BsSearch } from 'react-icons/bs'
