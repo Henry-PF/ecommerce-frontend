@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../NavBar/Navbar'
-import Footer from '../Footer/Footer'
+import NavBar from '../Navbar/NavBar.jsx'
+import Footer from '../Footer/Footer.jsx'
 import './aboutUs.css'
 import Newsletter from '../Newsletter/Newsletter'
 
@@ -11,7 +11,7 @@ const AboutUs = () => {
 
     return (
         <>
-            <Navbar />
+            <NavBar />
             <section className='container flex-column text-white'>
                 {/* <div>
                     <p className='mt-5 fs-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates asperiores earum maxime, nulla quis necessitatibus ad blanditiis animi officiis autem repellendus nam amet ea voluptatum voluptatem? Veniam, commodi doloremque.</p>
