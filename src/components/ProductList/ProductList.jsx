@@ -5,21 +5,21 @@ import ReactPaginate from 'react-paginate';
 import NavBar from '../LandingPage/Navbar/NavBar';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
 import Footer from '../LandingPage/Footer/Footer';
-import { VscDebugBreakpointLog } from 'react-icons/vsc';
-import './ProducsList.css';
 import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from '../../redux/actions';
 import { Accordion } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import { BiDetail } from "react-icons/bi";
 import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Favorites from '../LandingPage/Favorites/Favorites';
+import './ProducsList.css';
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
 
   const products = useSelector((state) => state.products);
   const categories = useSelector((state) => state.categories);
@@ -29,7 +29,6 @@ const ProductList = () => {
   const [searchActive, setSearchActive] = useState(false);
   const [precioMax, setPrecioMax] = useState('');
   const [precioMin, setPrecioMin] = useState('');
-  const [totalPages, setTotalPages] = useState(1);
   const [sortPrice, setSortPrice] = useState('');
   const [show, setShow] = useState(false);
 
@@ -99,7 +98,6 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
     const filtroNombre = params.get('nombre' || '');
     const categoria = params.get('categoria');
     setSearchActive(Boolean(filtroNombre || categoria || selectedCategories.length > 0));
@@ -175,12 +173,6 @@ const ProductList = () => {
                     <h3>{product.nombre}</h3>
                     <p className='product_category'>{product.categorium?.nombre}</p>
                     <h4 className='product-price'>$ {product.precio}</h4>
-                    {/* <p className='product-orders'>
-                      <span className='product-stock'>{`${product.stock} en Stock`}</span>
-                      <VscDebugBreakpointLog className='icon-diamont' />
-                      <span className='product-shipping'>Envio Gratis</span>
-                    </p> */}
-                    {/* <p className='product-description'>{product.descripcion}</p> */}
                   </div>
                 </div>
               </div>

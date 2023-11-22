@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Rating } from 'react-simple-star-rating'
 import style from './style.module.css'
 import axios, { Axios } from 'axios';
+import Swal from 'sweetalert2';
 
 const UserReview = () => {
     const [rating, setRating] = useState(1);
@@ -20,7 +21,12 @@ const UserReview = () => {
                 contenido: message,
                 puntuacion: rating,
             })
-            console.log(data);
+            if (!data.error) {
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success'
+                })
+            }
         } catch (error) {
             console.error(error);
         }

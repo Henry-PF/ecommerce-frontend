@@ -9,10 +9,13 @@ import Login from './Login/Login'
 import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
 import axios from 'axios'
 import Favorites from '../Favorites/Favorites'
+import { getFavorites } from '../../../redux/actions'
 
 const NavBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
+    const favorites = useSelector(state => state.favorites);
 
     const [show, setShow] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
@@ -30,10 +33,10 @@ const NavBar = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const queryParams = search ? `?nombre=${encodeURIComponent(search)}&categoriaId=` : '';
+        const queryParams = search ? `?nombre=${encodeURIComponent(search)}` : '';
         const url = `/product_list/${queryParams}`;
-        navigate(url);
         setSearch(search);
+        navigate(url);
     };
 
     useEffect(() => {
@@ -58,10 +61,10 @@ const NavBar = () => {
         };
 
         fetchUser();
-
+        dispatch(getFavorites(localStorage.getItem('id')))
         const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
@@ -81,13 +84,13 @@ const NavBar = () => {
                             <button className={style.btn_search} type='submit'><BsSearch /></button>
                         </form>
                         <div className={style.nav_icons}>
-                            <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
-                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link>
+                            {/* <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
+                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link> */}
 
                             {
                                 localStorage.getItem('token')
                                     ? <BtnLoggedIn name={user?.persona?.nombre} />
-                                    : <Link className={style.nav_icon} to={''} onClick={() => setShow(!show)}><BsPerson /></Link>
+                                    : <Link className={style.nav_login} to={''} onClick={() => setShow(!show)}>INICIAR SESI&#211;N</Link>
                             }
                             <Link
                                 className={`${style.nav_icon} ${style.nav_menu}`} to={''}
@@ -97,12 +100,22 @@ const NavBar = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className={`${style.nav_links} ${open ? style.open : style.close}`}>
-                        <a className={style.nav_link} href={'/'}>Home</a>
-                        <a className={style.nav_link} href={'/product_list'}>Shop</a>
-                        <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
-                        <Link className={style.nav_link} to={''}>Contacto</Link>
-                        <Link className={style.nav_link} to={'/CreateProducts'}>Crear Producto</Link>
+                    <div className={`${style.nav_links_container} ${open ? style.open : style.close}`}>
+                        <div className={style.nav_links}>
+                            <Link className={style.nav_link} href={'/'}>Home</Link>
+                            <Link className={style.nav_link} to={'/product_list'}>Shop</Link>
+                            <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
+                            <Link className={style.nav_link} to={''}>Contacto</Link>
+                            <Link className={style.nav_link} to={'/CreateProducts'}>Crear Producto</Link>
+
+                        </div>
+                        <div className={style.nav_icon_container}>
+                            <div className={style.fav_container}>
+                                <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
+                                <span className={style.fav_count}>{favorites.length}</span>
+                            </div>
+                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link>
+                        </div>
                     </div>
                 </div >
             </nav>

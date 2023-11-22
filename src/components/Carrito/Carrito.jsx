@@ -24,7 +24,7 @@ const Carrito = () => {
       if (userId) {
         setIsLoading(true);
         try {
-          await dispatch(getCarrito(userId, idCarrito));
+          dispatch(getCarrito(userId, idCarrito));
           setIsLoading(false);
         } catch (error) {
           console.error('Error al obtener el carrito:', error);
@@ -34,7 +34,7 @@ const Carrito = () => {
     };
 
     fetchData();
-  }, [dispatch, userId, idCarrito, updateValue]);
+  }, [dispatch, updateValue]);
 
   const handlePayButtonClick = async () => {
     try {
@@ -49,7 +49,6 @@ const Carrito = () => {
       console.error('Error al iniciar el pago:', error);
     }
   };
-
 
   const handleAddItem = async (product) => {
     console.log(product);
@@ -69,6 +68,7 @@ const Carrito = () => {
       console.error(error);
     }
   };
+
   const handleRemoveItem = async (product) => {
     console.log(product);
     const dataCart = {
@@ -87,6 +87,7 @@ const Carrito = () => {
       console.error(error);
     }
   };
+
   const handleDelete = async (product) => {
     console.log(product);
     const dataCart = {

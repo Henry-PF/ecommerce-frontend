@@ -50,10 +50,10 @@ const UserPanel = () => {
                             <label className={style.icon_container}><FaRegStar className={style.link_icon} /></label>
                             <Link to={''} className={style.nav_link} onClick={handleReview}> Review <IoIosArrowForward className={style.icon_arrow} /></Link>
                         </div>
-                        <div className={style.nav_section}>
+                        {/* <div className={style.nav_section}>
                             <label className={style.icon_container}><LuUserCog className={style.link_icon} /></label>
                             <Link to={''} className={style.nav_link}> Mi Perfil <IoIosArrowForward className={style.icon_arrow} /></Link>
-                        </div>
+                        </div> */}
                     </nav>
                 </aside>
                 <div className={style.panel_container}>

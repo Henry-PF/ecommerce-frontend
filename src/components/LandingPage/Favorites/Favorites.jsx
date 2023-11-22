@@ -58,7 +58,7 @@ const Favorites = (props) => {
 
     useEffect(() => {
         if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
-    }, [dispatch, props, Swal, datos]);
+    }, [dispatch, Swal, datos]);
 
     return (
         <>
