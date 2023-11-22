@@ -1,21 +1,20 @@
-import {React,  useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import NavBar from '../LandingPage/Navbar/NavBar';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
 import Footer from '../LandingPage/Footer/Footer';
-import { VscDebugBreakpointLog } from 'react-icons/vsc';
-import './ProducsList.css';
+import Favorites from '../LandingPage/Favorites/Favorites';
 import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from '../../redux/actions';
 import { Accordion } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import { BiDetail } from "react-icons/bi";
 import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
 import Swal from 'sweetalert2';
-import Favorites from '../LandingPage/Favorites/Favorites';
+import './ProducsList.css';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -168,7 +167,7 @@ const ProductList = () => {
                     <div className='btn_container'>
                       <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
                       <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
-                      <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></a>
+                      <Link href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
                     </div>
                   </picture>
                   <div className="product-info">

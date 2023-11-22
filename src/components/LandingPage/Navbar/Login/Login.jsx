@@ -1,4 +1,4 @@
-import {React,  useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
@@ -89,8 +89,8 @@ const Login = (props) => {
                         Iniciar sesi&#243;n con Google
                     </Link>
                     <div className='d-flex flex-column'>
-                        <p>¿Eres nuevo? <a href="/register">Registrarse!</a></p>
-                        <p>Ovidaste tu contraseña? <a href="#">Recuperar Contraseña</a></p>
+                        <p>¿Eres nuevo? <Link to={"/register"}>Registrarse!</Link></p>
+                        <p>Ovidaste tu contraseña? <Link to={"#"}>Recuperar Contraseña</Link></p>
                     </div>
                 </Offcanvas.Body>
             </Offcanvas>
