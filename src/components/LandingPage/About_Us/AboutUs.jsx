@@ -1,6 +1,12 @@
 import React from 'react'
+<<<<<<< HEAD
 import Navbar from '../Navbar/NavBar'
 import Footer from '../Footer/Footer'
+=======
+import NavBar from '../Navbar/NavBar.jsx'
+import Footer from '../Footer/Footer.jsx'
+import './aboutUs.css'
+>>>>>>> a3d32cd1c80168b0f246c1cc315b7b3acdb3650a
 import Newsletter from '../Newsletter/Newsletter'
 import './aboutUs.css'
 
@@ -10,7 +16,7 @@ const github = <svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0
 const AboutUs = () => {
     return (
         <>
-            <Navbar />
+            <NavBar />
             <section className='container flex-column text-white'>
                 {/* <div>
                     <p className='mt-5 fs-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptates asperiores earum maxime, nulla quis necessitatibus ad blanditiis animi officiis autem repellendus nam amet ea voluptatum voluptatem? Veniam, commodi doloremque.</p>

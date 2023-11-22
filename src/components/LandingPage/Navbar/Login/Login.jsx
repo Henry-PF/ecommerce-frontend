@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import {React,  useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'

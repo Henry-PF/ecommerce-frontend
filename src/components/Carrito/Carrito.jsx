@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import {React,  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { eliminarDelCarrito, getCarrito, actualizarCarrito } from '../../redux/actions';
 import { BsPlusLg, BsDash, BsTrash3 } from "react-icons/bs";
