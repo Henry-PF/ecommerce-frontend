@@ -29,7 +29,6 @@ const ProductList = () => {
   const [searchActive, setSearchActive] = useState(false);
   const [precioMax, setPrecioMax] = useState('');
   const [precioMin, setPrecioMin] = useState('');
-  const [sortPrice, setSortPrice] = useState('');
   const [show, setShow] = useState(false);
   const [datos, setDatos] = useState('');
 

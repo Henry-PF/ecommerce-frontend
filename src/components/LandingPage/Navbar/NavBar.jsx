@@ -15,8 +15,8 @@ const NavBar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const favorites = useSelector(state => state?.favorites);
-    const carrito = useSelector(state => state?.carrito);
+    const favorites = useSelector(state => state.favorites);
+    const carrito = useSelector(state => state.carrito);
 
     const [show, setShow] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
@@ -113,7 +113,7 @@ const NavBar = () => {
                             <div className={style.fav_container}>
                                 <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}>
                                     <BsHeart className={style.icon} />
-                                    <span className={style.fav_count}>{favorites.length}</span>
+                                    <span className={style.fav_count}>{favorites?.length}</span>
                                 </Link>
                             </div>
                             <div className={style.fav_container}>

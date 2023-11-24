@@ -13,6 +13,7 @@ const Favorites = (props) => {
 
     const dispatch = useDispatch();
     const favorites = useSelector(state => state.favorites);
+    console.log(favorites);
 
     const handleCart = async (cart) => {
         const dataCart = {

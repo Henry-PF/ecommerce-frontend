@@ -8,6 +8,7 @@ import Carrito from './components/Carrito/Carrito'
 import Register from './components/Register/Register'
 import UserPanel from './components/UserPanel/UserPanel'
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
+import ProductReviewsAndForm from './components/LandingPage/Reviews/ProductReviews';
 
 import './App.css'
 axios.defaults.baseURL = 'http://localhost:3002/api'
@@ -16,12 +17,13 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='' element={<Home />} />
-        <Route exact path="/product_detail/:id" element={<Details />} />
-        <Route exact path='/product_list' element={<ProductList />} />
-        <Route exact path='/about_us' element={<AboutUs />} />
-        <Route exact path='/cart' element={<Carrito />} />
-        <Route exact path='/register' element={<Register />} />
+        <Route exact path='/' element={<Home />} />
+        <Route path="/product_detail/:id" element={<Details />} />
+        <Route path='/product_list' element={<ProductList />} />
+        <Route path="/product_reviews/:id" element={<ProductReviewsAndForm />} />
+        <Route path='/about_us' element={<AboutUs />} />
+        <Route path='/cart' element={<Carrito />} />
+        <Route path='/register' element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route exact path='settings/user' element={<UserPanel />} />
         </Route>
