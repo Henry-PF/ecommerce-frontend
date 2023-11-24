@@ -1,18 +1,18 @@
-import {React,  useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import NavBar from '../LandingPage/Navbar/NavBar';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
 import Footer from '../LandingPage/Footer/Footer';
+import Favorites from '../LandingPage/Favorites/Favorites';
 import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from '../../redux/actions';
 import { Accordion } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
 import Swal from 'sweetalert2';
-import Favorites from '../LandingPage/Favorites/Favorites';
 import './ProducsList.css';
 
 const ProductList = () => {
@@ -31,6 +31,8 @@ const ProductList = () => {
   const [precioMin, setPrecioMin] = useState('');
   const [sortPrice, setSortPrice] = useState('');
   const [show, setShow] = useState(false);
+  const [datos, setDatos] = useState('');
+
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -56,27 +58,31 @@ const ProductList = () => {
       const { data } = await axios.post('/favoritos', {
         userId: localStorage.getItem('id'),
         productId: product.id,
-      })
-      if (!data.error) {
+      });
+
+      console.log(data);
+      setDatos(data);
+
+      if (data.error) {
         Swal.fire({
           title: data.message,
-          icon: 'success'
-        }).then(() => {
-          setShow(!show)
-        })
+          icon: 'warning'
+        });
       } else {
         Swal.fire({
           title: data.message,
           icon: 'success'
-        })
+        }).then(() => {
+          setShow(!show);
+        });
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
 
   const handleCart = async (product) => {
-    console.log(product);
     const dataCart = {
       id_usuario: localStorage.getItem('id'),
       cantidad: 1,
@@ -90,6 +96,11 @@ const ProductList = () => {
         Swal.fire({
           title: 'Se añadio el producto al carrito',
           icon: 'success'
+        })
+      } else {
+        Swal.fire({
+          title: 'Debes iniciar sesión',
+          icon: 'warning'
         })
       }
     } catch (error) {
@@ -116,8 +127,7 @@ const ProductList = () => {
     } else {
       dispatch(getAllProducts(currentPage));
     }
-    dispatch(sortProducts(sortPrice))
-  }, [dispatch, location.search, selectedCategories, precioMax, precioMin, currentPage]);
+  }, [dispatch, location.search, selectedCategories, precioMax, precioMin, currentPage, datos]);
 
   return (
     <>
@@ -159,23 +169,22 @@ const ProductList = () => {
         {(searchActive || (products.data && products.data.length > 0)) && (
           <ul>
             {products.data?.map((product) => (
-              <div key={product.id} className="product-item">
-                <div href={`/product_detail/${product.id}`} className='product-card'>
-                  <picture>
-                    <img src={product.img_productos[0]?.url} alt={product.nombre} />
-                    <div className='btn_container'>
-                      <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
-                      <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
-                      <a href={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></a>
-                    </div>
-                  </picture>
-                  <div className="product-info">
-                    <h3>{product.nombre}</h3>
-                    <p className='product_category'>{product.categorium?.nombre}</p>
-                    <h4 className='product-price'>$ {product.precio}</h4>
+              <div key={product.id} className="product-card">
+                <picture>
+                  <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                  <div className='btn_container'>
+                    <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                    <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                    <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
                   </div>
+                </picture>
+                <div className="product-info">
+                  <h3>{product.nombre}</h3>
+                  <p className='product_category'>{product.categorium?.nombre}</p>
+                  <h4 className='product-price'>$ {product.precio}</h4>
                 </div>
               </div>
+
             ))}
           </ul>
         )}

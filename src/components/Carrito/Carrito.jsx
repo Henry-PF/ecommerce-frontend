@@ -1,4 +1,4 @@
-import {React,  useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { eliminarDelCarrito, getCarrito, actualizarCarrito } from '../../redux/actions';
 import { BsPlusLg, BsDash, BsTrash3 } from "react-icons/bs";
@@ -15,26 +15,9 @@ const Carrito = () => {
   const idCarrito = parseInt(localStorage.getItem('id_carrito'));
 
   const carrito = useSelector(state => state.carrito);
-  console.log(carrito);
-  const [updateValue, setUpdateValue] = useState('');
+
+  const [updateValue, setUpdateValue] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userId) {
-        setIsLoading(true);
-        try {
-          dispatch(getCarrito(userId, idCarrito));
-          setIsLoading(false);
-        } catch (error) {
-          console.error('Error al obtener el carrito:', error);
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-  }, [dispatch, updateValue]);
 
   const handlePayButtonClick = async () => {
     try {
@@ -50,63 +33,39 @@ const Carrito = () => {
     }
   };
 
-  const handleAddItem = async (product) => {
-    console.log(product);
+  const handleItemAction = async (action, product) => {
     const dataCart = {
       id_usuario: localStorage.getItem('id'),
       cantidad: 1,
       subtotal: product?.producto?.precio,
       id_carrito: product?.id_carrito,
       id_producto: product?.producto?.id,
-    }
+    };
     try {
-      const { data } = await axios.post('/carrito/addItem', dataCart);
+      const { data } = await axios.post(`/carrito/${action}`, dataCart);
       if (!data.error) {
-        setUpdateValue(data)
+        setUpdateValue(prev => !prev);
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleAddItem = async (product) => {
+    handleItemAction('addItem', product);
   };
 
   const handleRemoveItem = async (product) => {
-    console.log(product);
-    const dataCart = {
-      id_usuario: localStorage.getItem('id'),
-      cantidad: 1,
-      subtotal: product?.producto?.precio,
-      id_carrito: product?.id_carrito,
-      id_producto: product?.producto?.id,
-    }
-    try {
-      const { data } = await axios.post('/carrito/removeItem', dataCart);
-      if (!data.error) {
-        setUpdateValue(data)
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    handleItemAction('removeItem', product);
   };
 
   const handleDelete = async (product) => {
-    console.log(product);
-    const dataCart = {
-      id_usuario: localStorage.getItem('id'),
-      cantidad: 1,
-      subtotal: product?.producto?.precio,
-      id_carrito: product?.id_carrito,
-      id_producto: product?.producto?.id,
-    }
-    try {
-      const { data } = await axios.post('/carrito/deleteItem', dataCart);
-      if (!data.error) {
-        setUpdateValue(data)
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    handleItemAction('deleteItem', product);
   };
 
+  useEffect(() => {
+    if (userId) dispatch(getCarrito(userId));
+  }, [dispatch, updateValue]);
 
   return (
     <>
@@ -115,8 +74,7 @@ const Carrito = () => {
         <h2>Carrito de Compras</h2>
         <div className={styles.container}>
           {
-            (carrito[0]?.detalle_carritos?.map(item => (
-              console.log(item),
+            carrito && carrito[0]?.detalle_carritos?.map(item => (
               <div key={item.id} className={styles.product_item}>
                 <picture className={styles.product_img}>
                   <img src={item.producto.img_productos[0].url} alt="" />
@@ -135,7 +93,7 @@ const Carrito = () => {
                     <input
                       className={styles.input}
                       type="text"
-                      value={item.cantidad}
+                      value={(item.cantidad)}
                       disabled
                     />
                     <button className={styles.btn_product} onClick={() => handleAddItem(item)}><BsPlusLg className={styles.btn_icon} /></button>
@@ -143,11 +101,11 @@ const Carrito = () => {
                 </div>
                 <div>
                   <p className={styles.product_title}>SubTotal</p>
-                  <p className={styles.product_price}>$ {item.subtotal}</p>
+                  <p className={styles.product_price}>$ {Math.round(item.subtotal * 100) / 100}</p>
                 </div>
                 <button className={styles.btn_delete} onClick={() => handleDelete(item)}><BsTrash3 className={styles.icon_delete} /></button>
               </div>
-            )))
+            ))
           }
           <div className={styles.cart_payment}>
             <h4>Detalle</h4>
@@ -162,7 +120,7 @@ const Carrito = () => {
                 Total
               </span>
               <span className={styles.cart_total}>
-                $ {carrito[0]?.total}
+                $ {Math.round(carrito[0]?.total * 100) / 100}
               </span>
             </div>
             <div>
