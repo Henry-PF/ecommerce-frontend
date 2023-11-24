@@ -9,6 +9,7 @@ import { BsCheck2 } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import { agregarAlCarrito } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+import ProductReviewsAndForm from '../LandingPage/Reviews/ProductReviews'; // Agrega esta línea
 
 export default function Details() {
   const { id } = useParams();
@@ -64,6 +65,7 @@ export default function Details() {
           </div>
         </div>
       </div>
+      <ProductReviewsAndForm id={id} />
       <Newsletter />
       <Footer />
     </>

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import axios from 'axios'
 import { Route, Routes } from "react-router-dom";
 import Home from './components/LandingPage/Home/Home'
@@ -11,7 +10,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import UserPanel from './components/UserPanel/UserPanel'
 import Carrito from './components/Carrito/Carrito';
 import './App.css'
-
+import ProductReviewsAndForm from './components/LandingPage/Reviews/ProductReviews';
 axios.defaults.baseURL = 'http://localhost:3002/api'
 
 
@@ -24,6 +23,7 @@ function App() {
         <Route exact path='/CreateProducts' element={<CreateProduct />} />
         <Route path="/product_detail/:id" element={<Details />} />
         <Route path='/product_list' element={<ProductList />} />
+        <Route path="/product_reviews/:id"element={<ProductReviewsAndForm />} />
         <Route path='/about_us' element={<AboutUs />} />
         <Route path='/cart' element={<Carrito />} />
         <Route path='/register' element={<Register />} />

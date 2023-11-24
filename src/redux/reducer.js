@@ -1,5 +1,5 @@
-
-import { ELIMINAR_DEL_CARRITO, AGREGAR_AL_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_CARRITO, ACTUALIZAR_CARRITO, GET_FAVORITES } from "./action-type";
+// reducer.js
+import {  CREATE_PRODUCT_REVIEW, ADD_ITEM_TO_PRODUCT_REVIEW, UPDATE_PRODUCT_REVIEW, DELETE_PRODUCT_REVIEW, GET_ALL_PRODUCT_REVIEWS, AGREGAR_AL_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_CARRITO, ACTUALIZAR_CARRITO } from "./action-type";
 
 const initialState = {
     products: [],
@@ -7,8 +7,8 @@ const initialState = {
     filters: [],
     reviews: [],
     user: {},
-    carrito: [],
-    favorites: [],
+    carrito: [], 
+    productReviews: [],
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -50,15 +50,16 @@ const rootReducer = (state = initialState, action) => {
                 default:
                     return { ...state, };
             }
+
             return {
                 ...state,
                 products: sortedProducts,
             };
-        case AGREGAR_AL_CARRITO:
-            return {
-                ...state,
-                carrito: action.payload,
-            };
+            case AGREGAR_AL_CARRITO:
+                return {
+                  ...state,
+                  carrito: action.payload,
+                };
         case GET_CARRITO:
             return {
                 ...state,
@@ -69,18 +70,18 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 carrito: action.payload,
             };
-        case ELIMINAR_DEL_CARRITO:
-            return {
-                ...state,
-                carrito: action.payload.data,
-                productId: action.payload.id_producto,
-            };
-
-        case GET_FAVORITES:
-            return {
-                ...state,
-                favorites: action.payload
-            }
+            case GET_ALL_PRODUCT_REVIEWS:
+                return {
+                  ...state,
+                  productReviews: action.payload,
+                };
+                case CREATE_PRODUCT_REVIEW:
+                    case ADD_ITEM_TO_PRODUCT_REVIEW:
+                    case UPDATE_PRODUCT_REVIEW:
+                    case DELETE_PRODUCT_REVIEW:
+                      return {
+                        ...state,
+                    };
         default:
             return state;
     }
