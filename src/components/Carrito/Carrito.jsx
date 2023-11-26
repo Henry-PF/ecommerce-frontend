@@ -26,7 +26,6 @@ const Carrito = () => {
         return;
       }
       const response = await axios.post('/pago/create-order', { id_user: userId, id_carrito: idCarrito });
-      console.log(response);
       window.open(`${response?.data?.links[1].href}`);
     } catch (error) {
       console.error('Error al iniciar el pago:', error);

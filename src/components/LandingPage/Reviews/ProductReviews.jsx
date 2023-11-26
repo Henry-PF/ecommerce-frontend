@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { getAllProductReviews, createProductReview } from '../../../redux/actions.js';
 
 const ProductReviewsAndForm = () => {
-  const { id: productId } = useParams(); 
+  const { id: productId } = useParams();
   const dispatch = useDispatch();
   const productReviews = useSelector((state) => state.productReviews);
   const [rating, setRating] = useState(0);
@@ -31,8 +31,8 @@ const ProductReviewsAndForm = () => {
     console.log('Content:', e.target.value); // Agrega este log para verificar el contenido
     setContent(e.target.value);
   };
-    
-const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (productId && content.trim() !== '') {
       try {
@@ -60,10 +60,10 @@ const handleSubmit = async (e) => {
           <div>
             <label>Content:</label>
             <textarea
-  value={content}
-  onChange={handleChangeContent}
-  required
-/>
+              value={content}
+              onChange={handleChangeContent}
+              required
+            />
           </div>
           <button type="submit">Submit Review</button>
         </form>

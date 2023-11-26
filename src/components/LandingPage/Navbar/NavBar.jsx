@@ -10,8 +10,9 @@ import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
 import axios from 'axios'
 import Favorites from '../Favorites/Favorites'
 import { getCarrito, getFavorites } from '../../../redux/actions'
+import logo from '../../../assets/logo.png'
 
-const NavBar = () => {
+const NavBar = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,39 +45,42 @@ const NavBar = () => {
         const token = Cookies.get('token');
         const userData = Cookies.get('user');
 
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', parsedUser.id);
-            localStorage.setItem('nombre', parsedUser.usuario);
-            localStorage.setItem('nombre', parsedUser.carritos[0].id);
-        }
-
         const fetchUser = async () => {
             try {
                 const { data } = await axios.get(`/usuarios/${localStorage.getItem('id')}`);
                 setUser(data.data);
+                localStorage.setItem('id_carrito', data.data?.carritos[0]?.id)
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error);
             }
         };
-
         fetchUser();
+        if (userData) {
+            const parsedUser = JSON.parse(userData);
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('id', parsedUser?.id);
+            localStorage.setItem('nombre', parsedUser?.usuario);
+        }
+
         if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
         if (localStorage.getItem('id')) dispatch(getCarrito(localStorage.getItem('id')))
 
         const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
-    }, [dispatch,]);
+    }, [dispatch, props.datos]);
 
     return (
         <>
             <nav className={style.nav_container}>
                 <div className='container'>
                     <div className={style.nav_header}>
-                        <div className={style.nav_logo}>
-                            LOGO
-                        </div>
+                        <Link to={'/'} className={style.nav_logo}>
+                            <picture>
+                                <img src={logo} alt="Trendy_shop_logo" />
+                            </picture>
+                            <h6>Trendy Shop</h6>
+                        </Link>
                         <form className={style.nav_search} onSubmit={handleSubmit}>
                             <input
                                 type="text"
@@ -106,8 +110,6 @@ const NavBar = () => {
                             <Link className={style.nav_link} to={'/product_list'}>Shop</Link>
                             <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
                             <Link className={style.nav_link} to={''}>Contacto</Link>
-                            <Link className={style.nav_link} to={'/CreateProducts'}>Crear Producto</Link>
-
                         </div>
                         <div className={style.nav_icon_container}>
                             <div className={style.fav_container}>
@@ -121,7 +123,7 @@ const NavBar = () => {
                                     <BsBag className={style.icon} />
                                     <span className={style.fav_count}>{carrito[0] ? carrito[0]?.detalle_carritos.reduce((acc, item) => acc + parseInt(item.cantidad), 0) : 0}</span>
                                 </Link>
-                                <span className={style.total}> {carrito[0] ? `$ ${carrito[0]?.total}` : ''}</span>
+                                <span className={style.total}> {carrito[0]?.detalle_carritos?.length > 0 ? `$ ${carrito[0]?.total}` : ''}</span>
                             </div>
                         </div>
                     </div>

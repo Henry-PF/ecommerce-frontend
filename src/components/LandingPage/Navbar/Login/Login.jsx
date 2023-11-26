@@ -31,9 +31,9 @@ const Login = (props) => {
                 })
             }
             if (data.token) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('id', data.data.id);
-                localStorage.setItem('id_carrito', data.data.carritos[0].id);
+                localStorage.setItem('token', data?.token);
+                localStorage.setItem('id', data.data?.id);
+                localStorage.setItem('id_carrito', data.data?.carritos[0]?.id);
                 window.location.reload();
             }
 
@@ -42,16 +42,17 @@ const Login = (props) => {
         };
     }
 
-    useEffect(() => {
-        const token = Cookies.get('token');
-        const userData = Cookies.get('user');
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', parsedUser.id);
-            localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
-        };
-    }, [])
+    // useEffect(() => {
+    //     const token = Cookies.get('token');
+    //     const userData = Cookies.get('user');
+    //     if (userData) {
+    //         const parsedUser = JSON.parse(userData);
+    //         console.log(parsedUser);
+    //         localStorage.setItem('token', token);
+    //         localStorage.setItem('id', parsedUser?.id);
+    //         localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
+    //     };
+    // }, [])
 
     return (
         <>

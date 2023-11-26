@@ -19,9 +19,9 @@ const BtnLoggedIn = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="/settings/user">Mi Cuenta</Dropdown.Item>
-                    <Dropdown.Item href="">Mis Compras</Dropdown.Item>
-                    <Dropdown.Item href="">Mis Reseñas</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/profile">Mi Cuenta</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/shopping">Mis Compras</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/review">Mis Reseñas</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item className={styles.logout} onClick={handleClick}>Cerrar Sesión</Dropdown.Item>
                 </Dropdown.Menu>

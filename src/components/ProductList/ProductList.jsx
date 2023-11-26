@@ -6,11 +6,11 @@ import NavBar from '../LandingPage/Navbar/NavBar';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
 import Footer from '../LandingPage/Footer/Footer';
 import Favorites from '../LandingPage/Favorites/Favorites';
-import { buscarProductos, getAllCategories, getAllProducts, sortProducts } from '../../redux/actions';
+import { buscarProductos, getAllCategories, getAllProducts } from '../../redux/actions';
 import { Accordion } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import { BsBag, BsBagPlus, BsPlusLg } from "react-icons/bs";
+import { BsBagPlus, BsPlusLg } from "react-icons/bs";
 import { BsHeart } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import './ProducsList.css';
@@ -18,6 +18,7 @@ import './ProducsList.css';
 const ProductList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const params = new URLSearchParams(location.search);
 
@@ -30,22 +31,38 @@ const ProductList = () => {
   const [precioMax, setPrecioMax] = useState('');
   const [precioMin, setPrecioMin] = useState('');
   const [show, setShow] = useState(false);
-  const [datos, setDatos] = useState('');
-
+  const [datos, setDatos] = useState(false);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set('page', newPage);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
 
   const handleCheckboxChange = (e) => {
     const checkboxValue = e.target.id;
 
+    let updatedCategories;
+
     if (selectedCategories.includes(checkboxValue)) {
-      setSelectedCategories(selectedCategories.filter(category => category !== checkboxValue));
+      updatedCategories = selectedCategories.filter(category => category !== checkboxValue);
+      setCurrentPage(1);
     } else {
-      setSelectedCategories([...selectedCategories, checkboxValue]);
+      updatedCategories = [...selectedCategories, checkboxValue];
+      setCurrentPage(1);
     }
+
+    updatedCategories = updatedCategories.filter(category => category !== '');
+
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set('categoria', updatedCategories.join(','));
+
+    setSelectedCategories(updatedCategories);
+
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
 
   const toggleFavorites = () => {
@@ -59,10 +76,8 @@ const ProductList = () => {
         productId: product.id,
       });
 
-      console.log(data);
-      setDatos(data);
-
       if (data.error) {
+        setDatos(!datos);
         Swal.fire({
           title: data.message,
           icon: 'warning'
@@ -91,7 +106,9 @@ const ProductList = () => {
     }
     try {
       const { data } = await axios.post('/carrito/addItem', dataCart);
+
       if (!data.error) {
+        setDatos(!datos);
         Swal.fire({
           title: 'Se añadio el producto al carrito',
           icon: 'success'
@@ -108,29 +125,35 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    const filtroNombre = params.get('nombre' || '');
-    const categoria = params.get('categoria');
-    setSearchActive(Boolean(filtroNombre || categoria || selectedCategories.length > 0));
+    const filtroNombre = params.get('nombre') || '';
+    const categoria = params.get('categoria') || '';
+    const selectedCategoriesFromUrl = categoria.split(',');
+
+    setSearchActive(Boolean(filtroNombre || categoria || selectedCategoriesFromUrl.length > 0));
     dispatch(getAllCategories());
 
-    if (filtroNombre || categoria || selectedCategories.length > 0 || precioMin || precioMax) {
+    if (filtroNombre || categoria || selectedCategoriesFromUrl.length > 0 || precioMin || precioMax) {
       dispatch(
         buscarProductos({
-          nombre: filtroNombre || '',
-          categoria: categoria || selectedCategories.join(','),
+          nombre: filtroNombre,
+          categoria: categoria,
           precioMin: precioMin,
           precioMax: precioMax,
           page: currentPage
         })
       );
+      setSelectedCategories(selectedCategoriesFromUrl);
     } else {
       dispatch(getAllProducts(currentPage));
     }
-  }, [dispatch, location.search, selectedCategories, precioMax, precioMin, currentPage, datos]);
+    const pageParam = params.get('page') || '1'; // Obtén el valor del parámetro 'page' o establece el valor predeterminado en 1
+    setCurrentPage(parseInt(pageParam, 10));
+  }, [dispatch, location.search, precioMax, precioMin, currentPage]);
+
 
   return (
     <>
-      <NavBar />
+      <NavBar datos={datos} />
       <div className="product-list container">
 
         <aside className='menu_search'>
@@ -147,11 +170,13 @@ const ProductList = () => {
                         id={category.id}
                         className='category_input'
                         onChange={handleCheckboxChange}
+                        checked={selectedCategories.includes(String(category.id))}
                       />
                       <label htmlFor={category.id}>{category.nombre}</label>
                     </div>
                   ))
                 }
+
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -196,6 +221,7 @@ const ProductList = () => {
         pageCount={products?.totalPages}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
+        forcePage={currentPage - 1}
         onPageChange={(selected) => handlePageChange(selected.selected + 1)}
         containerClassName={'pagination'}
         activeClassName={'active'}
