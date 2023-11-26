@@ -27,9 +27,9 @@ const Footer = () => {
                 <div className={style.about}>
                     <p className={style.tittle}>Sobre nosotros</p>
                     <ul className={style.ul}>
-                        <li><Link to={''} className={style.link}>Sobre Nosotros</Link> </li>
-                        <li><Link to={''} className={style.link}>Nuestra Tienda</Link> </li>
-                        <li><Link to={''} className={style.link}>Categorias</Link> </li>
+                        <li><Link to={'/about_us'} className={style.link}>Sobre Nosotros</Link> </li>
+                        <li><Link to={'/product_list'} className={style.link}>Nuestra Tienda</Link> </li>
+                        <li><Link to={'/product_list'} className={style.link}>Categorias</Link> </li>
                         <li><Link to={''} className={style.link}>Blogs</Link></li>
                     </ul>
 
@@ -37,26 +37,26 @@ const Footer = () => {
                 <div className={style.information}>
                     <p className={style.tittle}>Informaci&#243;n</p>
                     <ul className={style.ul}>
-                        <li className={style.li}><Link to={''} className={style.link}>Centro de ayuda</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Devoluciones</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Envios</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Contactanos</Link></li>
+                        <li><Link to={''} className={style.link}>Centro de ayuda</Link></li>
+                        <li><Link to={''} className={style.link}>Devoluciones</Link></li>
+                        <li><Link to={''} className={style.link}>Envios</Link></li>
+                        <li><Link to={''} className={style.link}>Contactanos</Link></li>
                     </ul>
                 </div>
                 <div className={style.information}>
                     <p className={style.tittle}>Usuario</p>
                     <ul className={style.ul}>
-                        <li className={style.li}><Link to={''} className={style.link}>Iniciar Sesi&#243;n</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Registro</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Configuraci&#243;n</Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}>Mis compras</Link></li>
+                        <li><Link to={''} className={style.link}>Iniciar Sesi&#243;n</Link></li>
+                        <li><Link to={'/register'} className={style.link}>Registro</Link></li>
+                        <li><Link to={''} className={style.link}>Configuraci&#243;n</Link></li>
+                        <li><Link to={''} className={style.link}>Mis compras</Link></li>
                     </ul>
                 </div>
                 <div className={style.app_links}>
                     <p className={style.tittle}>Obten nuestra App</p>
                     <ul className={style.ul}>
-                        <li className={style.li}><Link to={''} className={style.link}><img src={google} alt="" /></Link></li>
-                        <li className={style.li}><Link to={''} className={style.link}><img src={appStore} alt="" /></Link></li>
+                        <li><Link to={''} className={style.link}><img src={google} alt="" /></Link></li>
+                        <li><Link to={''} className={style.link}><img src={appStore} alt="" /></Link></li>
                     </ul>
                 </div>
             </footer >

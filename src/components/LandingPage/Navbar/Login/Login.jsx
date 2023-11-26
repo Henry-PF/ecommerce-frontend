@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Offcanvas } from 'react-bootstrap'
 import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
@@ -31,9 +31,9 @@ const Login = (props) => {
                 })
             }
             if (data.token) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('id', data.data.id);
-                localStorage.setItem('id_carrito', data.data.carritos[0].id);
+                localStorage.setItem('token', data?.token);
+                localStorage.setItem('id', data.data?.id);
+                localStorage.setItem('id_carrito', data.data?.carritos[0]?.id);
                 window.location.reload();
             }
 
@@ -42,16 +42,17 @@ const Login = (props) => {
         };
     }
 
-    useEffect(() => {
-        const token = Cookies.get('token');
-        const userData = Cookies.get('user');
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', parsedUser.id);
-            localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
-        };
-    }, [])
+    // useEffect(() => {
+    //     const token = Cookies.get('token');
+    //     const userData = Cookies.get('user');
+    //     if (userData) {
+    //         const parsedUser = JSON.parse(userData);
+    //         console.log(parsedUser);
+    //         localStorage.setItem('token', token);
+    //         localStorage.setItem('id', parsedUser?.id);
+    //         localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
+    //     };
+    // }, [])
 
     return (
         <>
@@ -84,13 +85,13 @@ const Login = (props) => {
                         </Button>
 
                     </Form>
-                    <Link className={style.btn_google} to='https://backend-dev-jnpc.1.us-1.fl0.io//api/auth/google' type="button">
+                    <Link className={style.btn_google} to='http://localhost:3002/api/auth/google' type="button">
                         <FcGoogle className={style.google_logo} />
                         Iniciar sesi&#243;n con Google
                     </Link>
                     <div className='d-flex flex-column'>
-                        <p>¿Eres nuevo? <a href="/register">Registrarse!</a></p>
-                        <p>Ovidaste tu contraseña? <a href="#">Recuperar Contraseña</a></p>
+                        <p>¿Eres nuevo? <Link to={"/register"}>Registrarse!</Link></p>
+                        <p>Ovidaste tu contraseña? <Link to={"#"}>Recuperar Contraseña</Link></p>
                     </div>
                 </Offcanvas.Body>
             </Offcanvas>
