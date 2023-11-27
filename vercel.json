@@ -15,9 +15,10 @@
         { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
         {
           "key": "Cache-Control",
-          "value": "s-maxage=3600, stale-while-revalidate=3600"
+          "value": "public, max-age=3600"  // Ejemplo: establece el tiempo de caché en 1 hora
         }
       ]
     }
   ]
 }
+
