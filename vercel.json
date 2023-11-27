@@ -33,22 +33,6 @@
                     "key": "Referrer-Policy",
                     "value": "strict-origin-when-cross-origin"
                 },
-                {
-                    "key": "Set-Cookie",
-                    "value": "__Secure-1PSIDCC=...; SameSite=None; Secure"
-                },
-                {
-                    "key": "Set-Cookie",
-                    "value": "__Host-GAPS=...; SameSite=None; Secure"
-                },
-                {
-                    "key": "Set-Cookie",
-                    "value": "SIDCC=...; SameSite=None; Secure"
-                },
-                {
-                    "key": "Set-Cookie",
-                    "value": "connect.sid=s:q5KZ3chVPWK944s1_PO3LPD3IBwBeO_s.ug/RK8TRaI3tyJNJlrTJUOUXfP8dt9fNs0pkhmeBbPA; SameSite=None; Secure"
-                }
             ]
         }
     ]
