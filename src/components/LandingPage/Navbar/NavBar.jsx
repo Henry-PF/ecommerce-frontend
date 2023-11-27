@@ -106,8 +106,8 @@ const NavBar = (props) => {
                     </div>
                     <div className={`${style.nav_links_container} ${open ? style.open : style.close}`}>
                         <div className={style.nav_links}>
-                            <Link className={style.nav_link} to={'/'}>Home</Link>
-                            <Link className={style.nav_link} to={'/product_list'}>Shop</Link>
+                            <Link className={style.nav_link} to={'/'}>Inicio</Link>
+                            <Link className={style.nav_link} to={'/product_list'}>Tienda</Link>
                             <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
                             <Link className={style.nav_link} to={''}>Contacto</Link>
                         </div>
