@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { BsBag, BsHeart, BsPerson, BsSearch } from 'react-icons/bs'
@@ -9,20 +9,21 @@ import Login from './Login/Login'
 import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
 import axios from 'axios'
 import Favorites from '../Favorites/Favorites'
-import { getFavorites } from '../../../redux/actions'
+import { getCarrito, getFavorites } from '../../../redux/actions'
+import logo from '../../../assets/logo.png'
 
-const NavBar = () => {
-    const dispatch = useDispatch()
+const NavBar = (props) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const params = new URLSearchParams(location.search);
+  
     const favorites = useSelector(state => state.favorites);
+    const carrito = useSelector(state => state.carrito);
 
     const [show, setShow] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
 
     const toggleLogin = () => {
         setShow(!show);
@@ -34,45 +35,52 @@ const NavBar = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const queryParams = search ? `?nombre=${encodeURIComponent(search)}&categoriaId=` : '';
+        const queryParams = search ? `?nombre=${encodeURIComponent(search)}` : '';
         const url = `/product_list/${queryParams}`;
-        navigate(url);
         setSearch(search);
+        navigate(url);
     };
 
     useEffect(() => {
         const token = Cookies.get('token');
         const userData = Cookies.get('user');
 
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', parsedUser.id);
-            localStorage.setItem('nombre', parsedUser.usuario);
-            localStorage.setItem('nombre', parsedUser.carritos[0].id);
-        }
-
         const fetchUser = async () => {
             try {
                 const { data } = await axios.get(`/usuarios/${localStorage.getItem('id')}`);
-                setUser(data.data)
+                setUser(data.data);
+                localStorage.setItem('id_carrito', data.data?.carritos[0]?.id)
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error);
             }
         };
         fetchUser();
-        dispatch(getFavorites(localStorage.getItem('id')))
+        if (userData) {
+            const parsedUser = JSON.parse(userData);
+
+            localStorage.setItem('token', token);
+            localStorage.setItem('id', parsedUser?.id);
+            localStorage.setItem('nombre', parsedUser?.usuario);
+        }
+
+        if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
+        if (localStorage.getItem('id')) dispatch(getCarrito(localStorage.getItem('id')))
+
+        const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
-    }, []);
+    }, [dispatch, props.datos]);
 
     return (
         <>
             <nav className={style.nav_container}>
                 <div className='container'>
                     <div className={style.nav_header}>
-                        <div className={style.nav_logo}>
-                            LOGO
-                        </div>
+                        <Link to={'/'} className={style.nav_logo}>
+                            <picture>
+                                <img src={logo} alt="Trendy_shop_logo" />
+                            </picture>
+                            <h6>Trendy Shop</h6>
+                        </Link>
                         <form className={style.nav_search} onSubmit={handleSubmit}>
                             <input
                                 type="text"
@@ -83,9 +91,6 @@ const NavBar = () => {
                             <button className={style.btn_search} type='submit'><BsSearch /></button>
                         </form>
                         <div className={style.nav_icons}>
-                            {/* <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
-                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link> */}
-
                             {
                                 localStorage.getItem('token')
                                     ? <BtnLoggedIn name={user?.persona?.nombre} />
@@ -105,15 +110,21 @@ const NavBar = () => {
                             <Link className={style.nav_link} to={'/product_list'}>Shop</Link>
                             <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
                             <Link className={style.nav_link} to={''}>Contacto</Link>
-                            <Link className={style.nav_link} to={'/CreateProducts'}>Crear Producto</Link>
-
                         </div>
                         <div className={style.nav_icon_container}>
                             <div className={style.fav_container}>
-                                <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}><BsHeart /></Link>
-                                <span className={style.fav_count}>{favorites.length}</span>
+                                <Link className={style.nav_icon} to={''} onClick={() => setShowFavorites(!showFavorites)}>
+                                    <BsHeart className={style.icon} />
+                                    <span className={style.fav_count}>{favorites?.length}</span>
+                                </Link>
                             </div>
-                            <Link className={style.nav_icon} to={'/cart'}><BsBag /></Link>
+                            <div className={style.fav_container}>
+                                <Link className={style.nav_icon} to={'/cart'}>
+                                    <BsBag className={style.icon} />
+                                    <span className={style.fav_count}>{carrito[0] ? carrito[0]?.detalle_carritos.reduce((acc, item) => acc + parseInt(item.cantidad), 0) : 0}</span>
+                                </Link>
+                                <span className={style.total}> {carrito[0]?.detalle_carritos?.length > 0 ? `$ ${carrito[0]?.total}` : ''}</span>
+                            </div>
                         </div>
                     </div>
                 </div >

@@ -1,8 +1,6 @@
 import React from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
 import styles from './style.module.css'
-import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const BtnLoggedIn = (props) => {
@@ -21,11 +19,11 @@ const BtnLoggedIn = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="/settings/user">Mi Cuenta</Dropdown.Item>
-                    <Dropdown.Item href="">Another action</Dropdown.Item>
-                    <Dropdown.Item href="">Something else</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/profile">Mi Cuenta</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/shopping">Mis Compras</Dropdown.Item>
+                    <Dropdown.Item href="/settings/user/review">Mis Reseñas</Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item className={styles.dropdownButton} onClick={handleClick}>Cerrar Sesión</Dropdown.Item>
+                    <Dropdown.Item className={styles.logout} onClick={handleClick}>Cerrar Sesión</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </>
