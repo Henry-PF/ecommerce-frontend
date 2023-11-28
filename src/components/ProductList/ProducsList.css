@@ -82,6 +82,7 @@
 .card {
   width: 100%;
   height: 100%;
+
 }
 
 .product-card picture {
@@ -218,7 +219,7 @@
   width: 100%;
   background-color: var(--primary);
   transition: all .3s;
-  z-index: 1;
+  z-index: 10;
 }
 
 .btn_fav,
