@@ -42,18 +42,6 @@ const Login = (props) => {
         };
     }
 
-    // useEffect(() => {
-    //     const token = Cookies.get('token');
-    //     const userData = Cookies.get('user');
-    //     if (userData) {
-    //         const parsedUser = JSON.parse(userData);
-    //         console.log(parsedUser);
-    //         localStorage.setItem('token', token);
-    //         localStorage.setItem('id', parsedUser?.id);
-    //         localStorage.setItem('id_carrito', parsedUser?.carritos[0]?.id);
-    //     };
-    // }, [])
-
     return (
         <>
             <Offcanvas show={props.show} onHide={props.toggleLogin} placement='end' backdrop={true}>
@@ -85,7 +73,7 @@ const Login = (props) => {
                         </Button>
 
                     </Form>
-                    <Link className={style.btn_google} to='http://localhost:3002/api/auth/google' type="button">
+                    <Link className={style.btn_google} to={'http://localhost:3002/api/auth/google'} type="button">
                         <FcGoogle className={style.google_logo} />
                         Iniciar sesi&#243;n con Google
                     </Link>
