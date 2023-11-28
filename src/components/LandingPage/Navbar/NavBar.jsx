@@ -16,7 +16,7 @@ import logo from '../../../assets/logo.png'
 const NavBar = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+  
     const favorites = useSelector(state => state.favorites);
     const carrito = useSelector(state => state.carrito);
 
