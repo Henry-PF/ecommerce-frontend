@@ -56,6 +56,23 @@ const Favorites = (props) => {
         }
     }
 
+
+    // Funcion de agregar todos los elementos de favoritos al carrito de compras: 
+    const handleAddAllToCart = async () => {
+        try {
+          // Recorrer todos los productos favoritos y agregarlos al carrito uno por uno
+          for (const fav of favorites) {
+            await handleCart(fav);
+          }
+          Swal.fire({
+            title: 'Todos los productos se han agregado al carrito',
+            icon: 'success'
+          });
+        } catch (error) {
+          console.error('Error al agregar todos los productos al carrito:', error);
+        }
+      };
+
     useEffect(() => {
         if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
     }, [dispatch, Swal, datos, props.show]);
@@ -85,6 +102,7 @@ const Favorites = (props) => {
                             </div>
                         ))
                     }
+                    <button onClick={handleAddAllToCart}>Agregar todos al carrito</button>
                 </Offcanvas.Body>
             </Offcanvas>
         </>
