@@ -10,6 +10,7 @@ import BtnLoggedIn from './BtnLoggedIn/BtnLoggedIn'
 import axios from 'axios'
 import Favorites from '../Favorites/Favorites'
 import { getCarrito, getFavorites } from '../../../redux/actions'
+import { useCookies } from 'react-cookie';
 import logo from '../../../assets/logo.png'
 
 const NavBar = (props) => {
@@ -24,6 +25,7 @@ const NavBar = (props) => {
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
     const [user, setUser] = useState(null);
+    const [cookies, setCookie] = useCookies(['']);
 
     const toggleLogin = () => {
         setShow(!show);
@@ -42,8 +44,8 @@ const NavBar = (props) => {
     };
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        const userData = Cookies.get('user');
+        // const token = Cookies.get('token');
+        // const userData = Cookies.get('user')
 
         const fetchUser = async () => {
             try {
@@ -55,20 +57,22 @@ const NavBar = (props) => {
             }
         };
         fetchUser();
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-
-            localStorage.setItem('token', token);
-            localStorage.setItem('id', parsedUser?.id);
-            localStorage.setItem('nombre', parsedUser?.usuario);
-        }
+        // if (userData) {
+        //     // const parsedUser = JSON.parse(userData);
+        //     // localStorage.setItem('token', token);
+        //     // localStorage.setItem('id', parsedUser.id);
+        // }
 
         if (localStorage.getItem('id')) dispatch(getFavorites(localStorage.getItem('id')))
         if (localStorage.getItem('id')) dispatch(getCarrito(localStorage.getItem('id')))
 
         const params = new URLSearchParams(location.search);
         setSearch(params.get('nombre') || search);
+
+        setCookie('token')
+        setCookie('user')
     }, [dispatch, props.datos]);
+
 
     return (
         <>

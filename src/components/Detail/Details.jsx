@@ -12,11 +12,16 @@ import { useDispatch } from 'react-redux';
 import ProductReviewsAndForm from '../LandingPage/Reviews/ProductReviews'; // Agrega esta línea
 import { Rating } from 'react-simple-star-rating';
 import Swal from 'sweetalert2';
+import Favorites from '../LandingPage/Favorites/Favorites';
 
 export default function Details() {
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const [showFavorites, setShowFavorites] = useState(false);
+  const toggleFavorites = () => {
+    setShowFavorites(!showFavorites);
+  };
+  
   const userId = localStorage.getItem('id');
   const idCarrito = localStorage.getItem('id_carrito'); // Asegúrate de tener esto disponible
 
@@ -25,7 +30,6 @@ export default function Details() {
   const [datos, setDatos] = useState(false);
 
 
-  const subtotal = product.precio;
   const totalPoints = reviews?.map(item => item.puntuacion).reduce((acc, val) => acc + val, 0);
   const totalStars = totalPoints / reviews.length
 
@@ -34,6 +38,7 @@ export default function Details() {
       try {
         const { data } = await axios.get(`/productos/${id}`);
         setProduct(data.data);
+        console.log(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -79,70 +84,99 @@ export default function Details() {
       console.error(error);
     }
   }
-
+  const handleAddToFavorites = async () => {
+    try {
+      const { data } = await axios.post('/favoritos', {
+        userId: localStorage.getItem('id'),
+        productId: id, // Utiliza el ID del producto actual
+      });
+  
+      if (data.error) {
+        setDatos(!datos);
+        Swal.fire({
+          title: data.message,
+          icon: 'warning',
+        });
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: 'success',
+        }).then(() => {
+          setShowFavorites(!showFavorites);
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   return (
     <>
       <NavBar datos={datos} />
-      <div className={styles.divContenido}>
-        <div className={styles.container}>
-          <div className={styles.divFoto}>
-            <img className={styles.imagen} src={product?.img_productos?.[0]?.url} alt="img" />
-          </div>
-          <div className={styles.divProductoInfo}>
-            <div className={styles.product_star}>
+      {product && (
 
-              <Rating
-                allowFraction
-                initialValue={totalStars || 0}
-                readonly={true}
-                size={20}
-                style={{ verticalAlign: 'initial' }}
-              />
-              <BsDiamondFill className={styles.icon_diamont} />
-              <span className={styles.reviews_length}>
-                <BsChatTextFill />
-                <span>
-                  {reviews?.length} reviews
-                </span>
-              </span>
-              <BsDiamondFill className={styles.icon_diamont} />
+        <div className={styles.divContenido}>
+          <div className={styles.container}>
+            <div className={styles.divFoto}>
+              <img className={styles.imagen} src={product?.img_productos?.[0]?.url} alt="img" />
+            </div>
+            <div className={styles.divProductoInfo}>
+              <div className={styles.product_star}>
 
-              {
-                product.stock > 0 ? (
-                  <span className={styles.inStock}>
-                    <BsCheck2 /> en Stock
+                <Rating
+                  allowFraction
+                  initialValue={totalStars || 0}
+                  readonly={true}
+                  size={20}
+                  style={{ verticalAlign: 'initial' }}
+                />
+                <BsDiamondFill className={styles.icon_diamont} />
+                <span className={styles.reviews_length}>
+                  <BsChatTextFill />
+                  <span>
+                    {reviews?.length} reviews
                   </span>
-                ) : (
-                  <span><RxCross2 /> sin Stock</span>
-                )
-              }
+                </span>
+                <BsDiamondFill className={styles.icon_diamont} />
+
+                {
+                  product?.stock > 0 ? (
+                    <span className={styles.inStock}>
+                      <BsCheck2 /> en Stock
+                    </span>
+                  ) : (
+                    <span><RxCross2 /> sin Stock</span>
+                  )
+                }
+              </div>
+              <h2 className={styles.tituloProducto}>{product.nombre}</h2>
+              <p className={styles.price}>$ {product.precio}</p>
+              <div className={styles.product_detail}>
+                <p className={styles.pProductoInfo}>Categoría</p>
+                <p className={styles.pProductoInfo}>{product.categoria?.map(cat => cat.nombre + ' ')}</p>
+                <p className={styles.pProductoInfo}>Stock</p>
+                <p className={styles.pProductoInfo}>{product.stock}
+                </p>
+                <p className={styles.pProductoInfo}>Descripción</p>
+                <p className={styles.pProductoInfo}>{product.descripcion}</p>
+              </div>
             </div>
-            <h2 className={styles.tituloProducto}>{product.nombre}</h2>
-            <p className={styles.price}>$ {product.precio}</p>
-            <div className={styles.product_detail}>
-              <p className={styles.pProductoInfo}>Categoría</p>
-              <p className={styles.pProductoInfo}>{product.categorium?.nombre}</p>
-              <p className={styles.pProductoInfo}>Stock</p>
-              <p className={styles.pProductoInfo}>{product.stock}
-              </p>
-              <p className={styles.pProductoInfo}>Descripción</p>
-              <p className={styles.pProductoInfo}>{product.descripcion}</p>
-            </div>
+
           </div>
           <div className={styles.divPanelDeCompra}>
             <div className={styles.divBotoneraCompra}>
               <button className={styles.botonCarrito} onClick={() => handleCart(product)}><BsBagPlus /> Añadir al Carrito</button>
-              <button className={styles.botonFavorito}> <BsHeart />Añadir a Favoritos</button>
+              <button className={styles.botonFavorito} onClick={handleAddToFavorites}><BsHeart /> Añadir a Favoritos</button>
             </div>
           </div>
-        </div>
-      </div >
+        </div >
+      )}
       <ProductReviewsAndForm id={id} />
       <div className={styles.reviews_container}>
         <h4>Reseñas de Usuarios</h4>
         {
           reviews && reviews?.map(review => (
-            <div className={styles.reviews_card}>
+            <div className={styles.reviews_card} key={review.id}>
               <div className={styles.reviews}>
                 <span>{review?.usuario?.persona?.nombre} {review?.usuario?.persona?.apellido}</span>
                 <Rating
@@ -160,6 +194,7 @@ export default function Details() {
           ))
         }
       </div>
+      <Favorites show={showFavorites} toggleFavorites={toggleFavorites} />
       <Newsletter />
       <Footer />
     </>
