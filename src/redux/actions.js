@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CREATE_PRODUCT_REVIEW, ADD_ITEM_TO_PRODUCT_REVIEW, UPDATE_PRODUCT_REVIEW, DELETE_PRODUCT_REVIEW, ELIMINAR_DEL_CARRITO, GET_ALL_PRODUCT_REVIEWS, AGREGAR_AL_CARRITO, GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES } from './action-type';
+import { CREATE_PRODUCT_REVIEW, ADD_ITEM_TO_PRODUCT_REVIEW, UPDATE_PRODUCT_REVIEW, DELETE_PRODUCT_REVIEW, ELIMINAR_DEL_CARRITO, GET_ALL_PRODUCT_REVIEWS, AGREGAR_AL_CARRITO, AGREGAR_TODOS_AL_CARRITO, GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES } from './action-type';
 
 export const getAllProducts = (page) => {
   return async (dispatch) => {
@@ -126,6 +126,30 @@ export const agregarAlCarrito = (userId, productId, cantidad, idCarrito, subtota
     });
   } catch (error) {
     console.error('Error al agregar al carrito:', error);
+  }
+};
+export const agregarTodosAlCarrito = (userId, productos) => async (dispatch) => {
+  try {
+    const promises = productos.map(async (producto) => {
+      const { id_producto, cantidad, id_carrito, subtotal } = producto;
+      const response = await axios.post('/carrito/addItem', {
+        id_usuario: userId,
+        id_producto,
+        cantidad,
+        id_carrito,
+        subtotal,
+      });
+      return response.data.data;
+    });
+
+    const resultados = await Promise.all(promises);
+
+    dispatch({
+      type: AGREGAR_TODOS_AL_CARRITO,
+      payload: resultados, // Puedes ajustar este payload según tus necesidades
+    });
+  } catch (error) {
+    console.error('Error al agregar todos al carrito:', error);
   }
 };
 

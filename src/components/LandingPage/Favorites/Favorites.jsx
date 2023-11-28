@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Offcanvas } from 'react-bootstrap'
 import { BsBagPlus, BsTrash3 } from "react-icons/bs";
 import style from './style.module.css'
-import { deleteFavorite, getFavorites } from '../../../redux/actions';
+import { deleteFavorite, getFavorites, agregarTodosAlCarrito } from '../../../redux/actions';
 import Swal from 'sweetalert2';
 
 const Favorites = (props) => {
@@ -58,19 +58,24 @@ const Favorites = (props) => {
 
 
     // Funcion de agregar todos los elementos de favoritos al carrito de compras: 
-    const handleAddAllToCart = async () => {
-        try {
-          // Recorrer todos los productos favoritos y agregarlos al carrito uno por uno
-          for (const fav of favorites) {
-            await handleCart(fav);
-          }
-          Swal.fire({
-            title: 'Todos los productos se han agregado al carrito',
-            icon: 'success'
+    const handleAddAllToCart = () => {
+        const userId = localStorage.getItem('id');
+      
+        dispatch(agregarTodosAlCarrito(userId, favorites))
+          .then(() => {
+            Swal.fire({
+              title: 'Todos los productos se han agregado al carrito',
+              icon: 'success'
+            });
+          })
+          .catch((error) => {
+            console.error('Error al agregar todos los productos al carrito:', error);
+            Swal.fire({
+              title: 'Error al agregar productos al carrito',
+              text: 'Hubo un problema al agregar los productos al carrito',
+              icon: 'error'
+            });
           });
-        } catch (error) {
-          console.error('Error al agregar todos los productos al carrito:', error);
-        }
       };
 
     useEffect(() => {
