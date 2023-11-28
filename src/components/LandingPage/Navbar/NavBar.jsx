@@ -73,7 +73,6 @@ const NavBar = (props) => {
         setCookie('user')
     }, [dispatch, props.datos]);
 
-    console.log(cookies);
 
     return (
         <>
