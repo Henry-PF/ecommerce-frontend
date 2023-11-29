@@ -6,7 +6,6 @@ export const getAllProducts = (page) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/productos?page=${page}`);
-
       dispatch({
         type: GET_ALL_PRODUCTS,
         payload: data
@@ -21,7 +20,6 @@ export const createProduct = (formData) => async () => {
   console.log('REDUX', formData);
   try {
     const response = await axios.post('/productos', formData);
-    console.log('Registro exitoso:', response.data);
   } catch (error) {
     console.error('Error en el registro:', error.message);
   }
@@ -60,7 +58,6 @@ export const getTestimonials = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get('/reviews');
-      console.log(data);
       dispatch({
         type: GET_TESTIMONIALS,
         payload: data
@@ -82,8 +79,6 @@ export const sortProducts = (orderBy) => {
 export const userRegister = (formData) => async () => {
   try {
     const response = await axios.post('/usuarios', formData);
-    console.log(response.data);
-
   } catch (error) {
     console.error(error);
   }
@@ -106,7 +101,6 @@ export const actualizarCarrito = (userId, carritoActualizado) => {
   return async (dispatch) => {
     try {
       await axios.put(`/carrito/${userId}`, { carrito: carritoActualizado });
-      console.log('Carrito actualizado:', carritoActualizado);
       dispatch({
         type: ACTUALIZAR_CARRITO,
         payload: carritoActualizado,
@@ -157,7 +151,6 @@ export const agregarTodosAlCarrito = (userId, productos) => async (dispatch) => 
 export const eliminarDelCarrito = (userId, productId) => async (dispatch) => {
   try {
     const response = await axios.post('/carrito/delete', { id_usuario: userId, id_producto: productId });
-    console.log('Respuesta del servidor:', response.data);
     dispatch({
       type: ELIMINAR_DEL_CARRITO,
       payload: response.data.data,
@@ -184,7 +177,7 @@ export const deleteFavorite = (datos) => async () => {
     const { data } = await axios.post('/favoritos/delete', datos);
   } catch (error) {
     console.error(error);
-  } 6
+  }
 }
 export const getAllProductReviews = () => async (dispatch) => {
   try {
@@ -193,7 +186,6 @@ export const getAllProductReviews = () => async (dispatch) => {
         timestamp: new Date().getTime(), // Agrega un parámetro de consulta único
       },
     });
-    console.log('Product Reviews Response:', response.data.data);
     dispatch({
       type: GET_ALL_PRODUCT_REVIEWS,
       payload: response.data.data,
@@ -207,7 +199,6 @@ export const getAllProductReviews = () => async (dispatch) => {
 const updateProductReview = (data) => async (dispatch) => {
   try {
     const response = await axios.post('/productReviews/update', data);
-
     dispatch({
       type: UPDATE_PRODUCT_REVIEW,
       payload: response.data,
@@ -220,7 +211,6 @@ const updateProductReview = (data) => async (dispatch) => {
 export const deleteProductReview = (data) => async (dispatch) => {
   try {
     const response = await axios.post('/productReviews/delete', data);
-
     dispatch({
       type: DELETE_PRODUCT_REVIEW,
       payload: response.data,

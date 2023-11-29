@@ -195,23 +195,26 @@ const ProductList = () => {
             {products.data
               ?.filter(product => product.id_statud === 1)
               .map((product) => (
-                <div key={product.id} href={`/product_detail/${product.id}`} className="product-card">
-                  <a className={parseInt(product.stock) <= 0 ? 'agotado' : 'card'} href={`/product_detail/${product.id}`}>
-                    <picture>
-                      <img src={product.img_productos[0]?.url} alt={product.nombre} />
-                    </picture>
-                    <div className="product-info">
-                      <h3>{product.nombre}</h3>
-                      <p className='product_category'>{product.categorium?.nombre}</p>
-                      <h4 className='product-price'>$ {product.precio}</h4>
+                <li>
+
+                  <div key={product.id} href={`/product_detail/${product.id}`} className="product-card">
+                    <a className={parseInt(product.stock) <= 0 ? 'agotado' : 'card'} href={`/product_detail/${product.id}`}>
+                      <picture>
+                        <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                      </picture>
+                      <div className="product-info">
+                        <h3>{product.nombre}</h3>
+                        <p className='product_category'>{product.categorium?.nombre}</p>
+                        <h4 className='product-price'>$ {product.precio}</h4>
+                      </div>
+                    </a>
+                    <div className='btn_container'>
+                      <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                      <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                      <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
                     </div>
-                  </a>
-                  <div className='btn_container'>
-                    <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
-                    <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
-                    <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
                   </div>
-                </div>
+                </li>
               ))}
           </ul>
         )}
