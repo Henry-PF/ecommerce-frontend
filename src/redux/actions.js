@@ -18,6 +18,7 @@ import {
   GET_FAVORITES,
 } from "./action-type";
 
+
 export const getAllProducts = (page) => {
   return async (dispatch) => {
     try {
@@ -83,6 +84,7 @@ export const getTestimonials = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("/reviews");
+
       dispatch({
         type: GET_TESTIMONIALS,
         payload: data,
@@ -108,7 +110,6 @@ export const userRegister = (formData) => async () => {
     console.error(error);
   }
 };
-
 export const getCarrito = (userId) => {
   return async (dispatch) => {
     try {
@@ -137,6 +138,7 @@ export const actualizarCarrito = (userId, carritoActualizado) => {
     }
   };
 };
+
 export const agregarAlCarrito =
   (userId, productId, cantidad, idCarrito, subtotal) => async (dispatch) => {
     try {
@@ -155,6 +157,32 @@ export const agregarAlCarrito =
       console.error("Error al agregar al carrito:", error);
     }
   };
+
+
+export const agregarTodosAlCarrito = (userId, productos) => async (dispatch) => {
+  try {
+    const promises = productos.map(async (producto) => {
+      const { id_producto, cantidad, id_carrito, subtotal } = producto;
+      const response = await axios.post('/carrito/addItem', {
+        id_usuario: userId,
+        id_producto,
+        cantidad,
+        id_carrito,
+        subtotal,
+      });
+      return response.data.data;
+    });
+
+    const resultados = await Promise.all(promises);
+
+    dispatch({
+      type: AGREGAR_TODOS_AL_CARRITO,
+      payload: resultados, // Puedes ajustar este payload según tus necesidades
+    });
+  } catch (error) {
+    console.error('Error al agregar todos al carrito:', error);
+  }
+};
 
 export const eliminarDelCarrito = (userId, productId) => async (dispatch) => {
   try {
@@ -194,7 +222,11 @@ export const deleteFavorite = (datos) => async () => {
 
 export const getAllProductReviews = () => async (dispatch) => {
   try {
-    const response = await axios.get("/productReviews");
+    const response = await axios.get('/productReviews', {
+      params: {
+        timestamp: new Date().getTime(), // Agrega un parámetro de consulta único
+      },
+    });
     dispatch({
       type: GET_ALL_PRODUCT_REVIEWS,
       payload: response.data.data,
@@ -203,6 +235,7 @@ export const getAllProductReviews = () => async (dispatch) => {
     console.error("Error al obtener todas las revisiones de productos:", error);
   }
 };
+
 
 const updateProductReview = (data) => async (dispatch) => {
   try {
@@ -229,11 +262,10 @@ export const deleteProductReview = (data) => async (dispatch) => {
     console.error("Error al eliminar la revisión del producto:", error);
   }
 };
+  
 export const createProductReview = (data) => async (dispatch) => {
   try {
-    const response = await axios.post("/productReviews", data);
-    // En tu función createProductReview dentro de actions.js
-    console.log("Data:", data); // Agrega este log para verificar los datos antes de enviarlos al servidor
+    const response = await axios.post('/productReviews', data);
     dispatch({
       type: CREATE_PRODUCT_REVIEW,
       payload: response.data,
