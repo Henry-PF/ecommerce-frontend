@@ -38,8 +38,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="https://www.linkedin.com/in/flaviamelissalopez/" target='_blank'>{linkedin}</a>
-                                        <a className='me-3' href="https://github.com/MelLopez22" target='_blank'>{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/federico-carusso-177407276/" target='_blank'>{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/FedeCarusso" target='_blank'>{github}</a>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="">{linkedin}</a>
-                                        <a className='me-3' href="">{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/thiago-fern%C3%A1ndez-733969236/">{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/Frescoco">{github}</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +77,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="https://www.linkedin.com/in/agustin-almonacid-1431851bb/" target='_blank'>{linkedin}</a>
-                                        <a className='me-3' href="https://github.com/Turco777 " target='_blank'>{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/miguel-tello-82138827a/" target='_blank'>{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/Migueltello17" target='_blank'>{github}</a>
                                     </div>
                                 </div>
                             </div>
@@ -103,8 +103,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="https://www.linkedin.com/in/maximiliano-marquez-519274183/" target='_blank'>{linkedin}</a>
-                                        <a className='me-3' href="https://github.com/MaxyMarquez" target='_blank'>{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/joaquin-medina22/" target='_blank'>{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/cacho-medina" target='_blank'>{github}</a>
                                     </div>
                                 </div>
                             </div>
