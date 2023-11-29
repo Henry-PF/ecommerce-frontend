@@ -92,7 +92,6 @@ export const getCarrito = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/carrito/${userId}`);
-      console.log('Datos del carrito recibidos:', data);
       dispatch({
         type: GET_CARRITO,
         payload: data.data,

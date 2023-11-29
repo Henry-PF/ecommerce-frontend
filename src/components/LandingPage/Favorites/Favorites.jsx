@@ -59,27 +59,36 @@ const Favorites = (props) => {
 
     // Funcion de agregar todos los elementos de favoritos al carrito de compras: 
     const handleAddAllToCart = async () => {
-        for (const item of favorites) {
-            const dataCart = {
-                id_usuario: item.id_usuario,
-                cantidad: 1,
-                subtotal: item.producto.precio,
-                id_carrito: localStorage.getItem('id_carrito'),
-                id_producto: item.id_producto,
-            }
-            try {
-                const { data } = await axios.post('/carrito/addItem', dataCart);
-                if (!data.error) {
-                    handleDelete(item.id_producto)
+        try {
+
+            for (const item of favorites) {
+                const dataCart = {
+                    id_usuario: item.id_usuario,
+                    cantidad: 1,
+                    subtotal: item.producto.precio,
+                    id_carrito: localStorage.getItem('id_carrito'),
+                    id_producto: item.id_producto,
                 }
-            } catch (error) {
-                console.error(error);
+                try {
+                    const { data } = await axios.post('/carrito/addItem', dataCart);
+                    if (!data.error) {
+                        handleDelete(item.id_producto)
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
             }
+            Swal.fire({
+                title: 'Todos los productos se han agregado al carrito',
+                icon: 'success'
+            });
+        } catch (error) {
+            Swal.fire({
+                title: 'Ocurrio un error',
+                icon: 'error'
+            });
+            console.error(error);
         }
-        Swal.fire({
-            title: 'Todos los productos se han agregado al carrito',
-            icon: 'success'
-        });
         // dispatch(agregarTodosAlCarrito(userId, favorites))
         //     .then(() => {
         //         Swal.fire({
