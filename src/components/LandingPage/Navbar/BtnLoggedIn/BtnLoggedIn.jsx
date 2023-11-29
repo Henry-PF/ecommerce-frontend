@@ -5,11 +5,22 @@ import Cookies from 'js-cookie';
 
 const BtnLoggedIn = (props) => {
 
+    const logout = async () => {
+        try {
+            const { data } = await axios.get('/auth/logout');
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const handleClick = () => {
         localStorage.clear();
         Cookies.remove('user');
         Cookies.remove('token');
+        logout();
         window.location.reload();
+
     }
     return (
         <>
