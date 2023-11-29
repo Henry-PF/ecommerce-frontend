@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./components/LandingPage/Home/Home";
 import Details from "./components/Detail/Details";
 import ProductList from "./components/ProductList/ProductList";
@@ -13,6 +13,7 @@ import "./App.css";
 import UserReview from "./components/UserPanel/UserReview/UserReview";
 import UserShopping from "./components/UserPanel/UserShopping/UserShopping";
 import UserData from "./components/UserPanel/UserData/UserData";
+import Unsubscribe from "./components/Unsubscribe/Unsubscribe";
 // axios.defaults.baseURL = 'https://backend-dev-jnpc.1.us-1.fl0.io/api'
 axios.defaults.baseURL = "http://localhost:3002/api";
 
@@ -38,6 +39,8 @@ function App() {
             element={<UserShopping />}
           />
           <Route exact path="settings/user/review" element={<UserReview />} />
+          <Route exact path="unsubscribe" element={<Navigate to={"/"} />} />
+          <Route exact path="unsubscribe/:id" element={<Unsubscribe />} />
         </Route>
       </Routes>
     </div>
