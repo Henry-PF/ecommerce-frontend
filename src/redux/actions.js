@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 import { CREATE_PRODUCT_REVIEW, ADD_ITEM_TO_PRODUCT_REVIEW, UPDATE_PRODUCT_REVIEW, DELETE_PRODUCT_REVIEW, ELIMINAR_DEL_CARRITO, GET_ALL_PRODUCT_REVIEWS, AGREGAR_AL_CARRITO, AGREGAR_TODOS_AL_CARRITO, GET_CARRITO, ACTUALIZAR_CARRITO, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_TESTIMONIALS, SEARCH_PRODUCTS, SORT_PRICE, GET_FAVORITES } from './action-type';
 
 export const getAllProducts = (page) => {
@@ -17,7 +16,6 @@ export const getAllProducts = (page) => {
     }
   };
 };
-
 
 export const createProduct = (formData) => async () => {
   console.log('REDUX', formData);

@@ -147,7 +147,7 @@ const Carrito = () => {
                 Cant. de productos
               </span>
               <span className={styles.cart_products}>
-                {carrito[0]?.detalle_carritos.reduce((acc, item) => acc + parseInt(item.cantidad), 0)}
+                {carrito[0]?.detalle_carritos?.reduce((acc, item) => acc + parseInt(item.cantidad), 0)}
               </span>
               <span className={styles.cart_total_title}>
                 Total

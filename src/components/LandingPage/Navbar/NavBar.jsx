@@ -16,7 +16,7 @@ import logo from '../../../assets/logo.png'
 const NavBar = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-  
+
     const favorites = useSelector(state => state.favorites);
     const carrito = useSelector(state => state.carrito);
 
@@ -125,7 +125,7 @@ const NavBar = (props) => {
                             <div className={style.fav_container}>
                                 <Link className={style.nav_icon} to={'/cart'}>
                                     <BsBag className={style.icon} />
-                                    <span className={style.fav_count}>{carrito[0] ? carrito[0]?.detalle_carritos.reduce((acc, item) => acc + parseInt(item.cantidad), 0) : 0}</span>
+                                    <span className={style.fav_count}>{carrito[0] ? carrito[0]?.detalle_carritos?.reduce((acc, item) => acc + parseInt(item.cantidad), 0) : 0}</span>
                                 </Link>
                                 <span className={style.total}> {carrito[0]?.detalle_carritos?.length > 0 ? `$ ${carrito[0]?.total}` : ''}</span>
                             </div>
