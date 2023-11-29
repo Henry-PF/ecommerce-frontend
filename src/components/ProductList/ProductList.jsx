@@ -206,7 +206,6 @@ const ProductList = () => {
           </Accordion>
         </aside>
   
-        {(searchActive || (products.data && products.data.length > 0)) && (
           <>
             <ul>
               {products.data
@@ -233,8 +232,6 @@ const ProductList = () => {
     {(products.data && products.data.length === 0) && <p className="no-products-message">No existen productos con esa categoría.</p>}
             </ul>
           </>
-        )}
-
       </div>
       <ReactPaginate
         previousLabel={<AiOutlineArrowLeft className='pagination-icon' />}
