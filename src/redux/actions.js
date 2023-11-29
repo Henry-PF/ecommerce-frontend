@@ -42,20 +42,23 @@ export const getAllCategories = () => {
         }
     }
 }
+// actions.js
 
 export const buscarProductos = ({ nombre, categoria, precioMin, precioMax, page }) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get(`/filtros/search?nombre=${nombre}&categoriaId=${categoria}&precioMin=${precioMin}&precioMax=${precioMax}&page=${page}`);
-            dispatch({
-                type: SEARCH_PRODUCTS,
-                payload: data
-            });
-        } catch (error) {
-            console.error('Error al buscar productos:', error);
-        }
-    };
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/filtros/search?nombre=${nombre}&categoriaId=${categoria}&precioMin=${precioMin}&precioMax=${precioMax}&page=${page}`);
+      
+      dispatch({
+        type: SEARCH_PRODUCTS,
+        payload: data
+      });
+    } catch (error) {
+      console.error('Error al buscar productos:', error);
+    }
+  };
 };
+
 
 export const getTestimonials = () => {
     return async (dispatch) => {

@@ -24,6 +24,7 @@ const ProductList = () => {
 
   const products = useSelector((state) => state.products);
   const categories = useSelector((state) => state.categories);
+  const [noProductsMessage, setNoProductsMessage] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -132,20 +133,38 @@ const ProductList = () => {
     setSearchActive(Boolean(filtroNombre || categoria || selectedCategoriesFromUrl.length > 0));
     dispatch(getAllCategories());
 
-    if (filtroNombre || categoria || selectedCategoriesFromUrl.length > 0 || precioMin || precioMax) {
-      dispatch(
-        buscarProductos({
+   // ...
+
+   if (filtroNombre || categoria || selectedCategoriesFromUrl.length > 0 || precioMin || precioMax) {
+    (async () => {
+      try {
+        // Dispatch de manera asíncrona
+        await dispatch(buscarProductos({
           nombre: filtroNombre,
           categoria: categoria,
           precioMin: precioMin,
           precioMax: precioMax,
           page: currentPage
-        })
-      );
-      setSelectedCategories(selectedCategoriesFromUrl);
-    } else {
-      dispatch(getAllProducts(currentPage));
-    }
+        }));
+  
+        // Verifica la longitud de los datos después de la búsqueda
+        if (products.data && products.data.length === 0) {
+          setNoProductsMessage('No existen productos con esa categoría.');
+        } else {
+          setNoProductsMessage(''); // Reinicia el mensaje si hay productos
+        }
+  
+        setSelectedCategories(selectedCategoriesFromUrl);
+      } catch (error) {
+        // Manejo general de errores
+        console.error('Error al buscar productos:', error);
+        setNoProductsMessage('Error al cargar productos.');
+      }
+    })();
+  } else {
+    dispatch(getAllProducts(currentPage));
+  }
+
     const pageParam = params.get('page') || '1'; // Obtén el valor del parámetro 'page' o establece el valor predeterminado en 1
     setCurrentPage(parseInt(pageParam, 10));
   }, [dispatch, location.search, precioMax, precioMin, currentPage]);
@@ -155,28 +174,25 @@ const ProductList = () => {
     <>
       <NavBar datos={datos} />
       <div className="product-list container">
-
+  
         <aside className='menu_search'>
           <Accordion defaultActiveKey={['0']} alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header>Categorias</Accordion.Header>
               <Accordion.Body className='accordion_body'>
-                {
-                  categories?.map(category => (
-                    <div key={category.id}>
-                      <input
-                        type="checkbox"
-                        name={category.nombre}
-                        id={category.id}
-                        className='category_input'
-                        onChange={handleCheckboxChange}
-                        checked={selectedCategories.includes(String(category.id))}
-                      />
-                      <label htmlFor={category.id}>{category.nombre}</label>
-                    </div>
-                  ))
-                }
-
+                {categories?.map(category => (
+                  <div key={category.id}>
+                    <input
+                      type="checkbox"
+                      name={category.nombre}
+                      id={category.id}
+                      className='category_input'
+                      onChange={handleCheckboxChange}
+                      checked={selectedCategories.includes(String(category.id))}
+                    />
+                    <label htmlFor={category.id}>{category.nombre}</label>
+                  </div>
+                ))}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -189,31 +205,34 @@ const ProductList = () => {
             </Accordion.Item>
           </Accordion>
         </aside>
-
+  
         {(searchActive || (products.data && products.data.length > 0)) && (
-          <ul>
-            {products.data
-              ?.filter(product => product.id_statud === 1)
-              .map((product) => (
-                <a key={product.id} href={`/product_detail/${product.id}`} className="product-card">
-                  <div className={parseInt(product.stock) <= 0 ? 'agotado' : 'card'}>
-                    <picture>
-                      <img src={product.img_productos[0]?.url} alt={product.nombre} />
-                      <div className='btn_container'>
-                        <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
-                        <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
-                        <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
+          <>
+            <ul>
+              {products.data
+                ?.filter(product => product.id_statud === 1)
+                .map((product) => (
+                  <a key={product.id} href={`/product_detail/${product.id}`} className="product-card">
+                    <div className={parseInt(product.stock) <= 0 ? 'agotado' : 'card'}>
+                      <picture>
+                        <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                        <div className='btn_container'>
+                          <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                          <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                          <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
+                        </div>
+                      </picture>
+                      <div className="product-info">
+                        <h3>{product.nombre}</h3>
+                        <p className='product_category'>{product.categorium?.nombre}</p>
+                        <h4 className='product-price'>$ {product.precio}</h4>
                       </div>
-                    </picture>
-                    <div className="product-info">
-                      <h3>{product.nombre}</h3>
-                      <p className='product_category'>{product.categorium?.nombre}</p>
-                      <h4 className='product-price'>$ {product.precio}</h4>
                     </div>
-                  </div>
-                </a>
-              ))}
-          </ul>
+                  </a>
+                ))}
+    {(products.data && products.data.length === 0) && <p className="no-products-message">No existen productos con esa categoría.</p>}
+            </ul>
+          </>
         )}
 
       </div>

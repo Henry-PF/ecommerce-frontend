@@ -289,3 +289,15 @@
   transform: rotate(48deg);
 
 }
+.no-products-message {
+  background-color: #f8d7da; /* Color de fondo rojo claro (puedes ajustarlo según tus preferencias) */
+  color: #721c24; /* Color de texto rojo oscuro (puedes ajustarlo según tus preferencias) */
+  padding: 1em; /* Espaciado interno para que se vea más agradable */
+  border: 1px solid #f5c6cb; /* Borde rojo claro (puedes ajustarlo según tus preferencias) */
+  border-radius: 0.25rem; /* Bordes redondeados para un aspecto más suave */
+  margin: 1em auto; /* Centra el contenedor y agrega un margen */
+  max-width: 600px; /* Limita el ancho del contenedor */
+   margin-bottom: 1000px; /* Agrega un margen inferior al elemento ul */
+  }
+
+
