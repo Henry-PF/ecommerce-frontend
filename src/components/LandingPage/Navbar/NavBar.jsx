@@ -125,7 +125,7 @@ const NavBar = (props) => {
                             <Link className={style.nav_link} to={'/'}>Inicio</Link>
                             <Link className={style.nav_link} to={'/product_list'}>Tienda</Link>
                             <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
-                            <Link className={style.nav_link} to={''}>Contacto</Link>
+{/*                             <Link className={style.nav_link} to={''}>Contacto</Link> */}
                         </div>
                         <div className={style.nav_icon_container}>
                             <div className={style.fav_container}>

@@ -299,3 +299,9 @@
   transform: rotate(48deg);
 
 }
+
+.error {
+  font-size: 1.5em;
+  grid-column: 2;
+  padding: 15px;
+}

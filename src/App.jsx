@@ -13,6 +13,7 @@ import UserReview from "./components/UserPanel/UserReview/UserReview";
 import UserShopping from "./components/UserPanel/UserShopping/UserShopping";
 import UserData from "./components/UserPanel/UserData/UserData";
 import Unsubscribe from "./components/Unsubscribe/Unsubscribe";
+import PaymentDone from "./components/PaymentDone/PaymentDone";
 axios.defaults.baseURL = 'https://backend-dev-jnpc.1.us-1.fl0.io/api'
 // axios.defaults.baseURL = "http://localhost:3002/api";
 
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="settings/user/review" element={<UserReview />} />
           <Route exact path="unsubscribe" element={<Navigate to={"/"} />} />
           <Route exact path="unsubscribe/:id" element={<Unsubscribe />} />
+          <Route exact path="/payment_done/:id" element={<PaymentDone />} />
         </Route>
       </Routes>
     </div>
