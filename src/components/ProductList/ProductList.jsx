@@ -49,21 +49,21 @@ const ProductList = () => {
 
     if (selectedCategories.includes(checkboxValue)) {
       updatedCategories = selectedCategories.filter(category => category !== checkboxValue);
-      setCurrentPage(1);
     } else {
       updatedCategories = [...selectedCategories, checkboxValue];
-      setCurrentPage(1);
     }
 
     updatedCategories = updatedCategories.filter(category => category !== '');
 
     const updatedParams = new URLSearchParams(location.search);
     updatedParams.set('categoria', updatedCategories.join(','));
+    updatedParams.set('page', '1');
 
     setSelectedCategories(updatedCategories);
 
     navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
+
 
   const toggleFavorites = () => {
     setShow(!show)
@@ -162,21 +162,22 @@ const ProductList = () => {
               <Accordion.Header>Categorias</Accordion.Header>
               <Accordion.Body className='accordion_body'>
                 {
-                  categories?.map(category => (
-                    <div key={category.id}>
-                      <input
-                        type="checkbox"
-                        name={category.nombre}
-                        id={category.id}
-                        className='category_input'
-                        onChange={handleCheckboxChange}
-                        checked={selectedCategories.includes(String(category.id))}
-                      />
-                      <label htmlFor={category.id}>{category.nombre}</label>
-                    </div>
-                  ))
+                  categories
+                    ?.filter(category => category.id_statud !== 2) // Filtrar categorías con id_statud === 2
+                    .map(category => (
+                      <div key={category.id}>
+                        <input
+                          type="checkbox"
+                          name={category.nombre}
+                          id={category.id}
+                          className='category_input'
+                          onChange={handleCheckboxChange}
+                          checked={selectedCategories.includes(String(category.id))}
+                        />
+                        <label htmlFor={category.id}>{category.nombre}</label>
+                      </div>
+                    ))
                 }
-
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -189,6 +190,7 @@ const ProductList = () => {
             </Accordion.Item>
           </Accordion>
         </aside>
+
 
         {(searchActive || (products.data && products.data.length > 0)) && (
           <ul>

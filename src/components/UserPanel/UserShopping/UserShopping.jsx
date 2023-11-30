@@ -45,32 +45,38 @@ const UserShopping = () => {
                 <UserPanel />
                 <div className={styles.facturas}>
                     {
-                        facturas?.map(factura => (
-                            <>
-                                <ul>
-                                    <li>
-                                        <div className={styles.factura_div}>
-                                            <span>
-                                                {moment(factura.createdAt).format("DD/MM/YYYY")}
-                                            </span>
-                                        </div>
-                                        <div className={styles.factura_div}>
-                                            <span>
-                                                $ {factura.total}
-                                            </span>
-                                        </div>
-                                        <div className={styles.factura_div}>
-                                            <span>
-                                                {factura.statud.nombre}
-                                            </span>
-                                        </div>
-                                        <div className={styles.factura_div}>
-                                            <button onClick={() => handleShow(factura.id)}>Ver Detalle</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </>
-                        ))
+                        facturas?.length === 0 ?
+                            (
+                                <div className='text-center'>
+                                    <p className='text-center'>Todavia no has realizado ninguna compra</p>
+                                    <a href="/product_list" className={styles.link_shop}>Ir a la Tienda</a>
+                                </div>
+                            ) : facturas?.map(factura => (
+                                <>
+                                    <ul>
+                                        <li>
+                                            <div className={styles.factura_div}>
+                                                <span>
+                                                    {moment(factura.createdAt).format("DD/MM/YYYY")}
+                                                </span>
+                                            </div>
+                                            <div className={styles.factura_div}>
+                                                <span>
+                                                    $ {factura.total}
+                                                </span>
+                                            </div>
+                                            <div className={styles.factura_div}>
+                                                <span>
+                                                    {factura.statud.nombre}
+                                                </span>
+                                            </div>
+                                            <div className={styles.factura_div}>
+                                                <button onClick={() => handleShow(factura.id)}>Ver Detalle</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </>
+                            ))
                     }
                     <Modal show={show} onHide={handleClose} size="lg">
                         <Modal.Header closeButton>

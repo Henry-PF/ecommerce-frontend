@@ -11,6 +11,7 @@ import Navbar from '../LandingPage/Navbar/NavBar'
 import styles from './register.module.css'
 import { userRegister } from '../../redux/actions';
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
@@ -31,9 +32,18 @@ const Register = () => {
                 telefono: values.telefono,
             }
         }
+        try {
+            dispatch(userRegister(dataCliente));
+            Swal.fire({
+                title: 'Registro Exitoso',
+                text: 'Gracias por Registrarte a nuestra web',
+                icon: 'success'
+            }).then(() => {
+                navigate("/");
+            })
+        } catch (error) {
 
-        dispatch(userRegister(dataCliente));
-        navigate("/");
+        }
 
         // swal("Registrado!");
         actions.resetForm()
@@ -129,7 +139,6 @@ const Register = () => {
                         <FloatingLabel controlId="floatingInput" label="Email" className="w-100">
                             <Form.Control
                                 className={styles.form_input}
-
                                 type="email"
                                 placeholder="name@example.com"
                                 name="correo"

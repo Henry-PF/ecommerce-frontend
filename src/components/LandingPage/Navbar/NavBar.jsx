@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BsBag, BsHeart, BsPerson, BsSearch } from 'react-icons/bs'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Cookies from 'js-cookie';
@@ -16,6 +16,7 @@ import logo from '../../../assets/logo.png'
 const NavBar = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const favorites = useSelector(state => state.favorites);
     const carrito = useSelector(state => state.carrito);
@@ -46,6 +47,17 @@ const NavBar = (props) => {
     useEffect(() => {
         // const token = Cookies.get('token');
         // const userData = Cookies.get('user')
+        const queryParams = new URLSearchParams(location.search);
+
+        if (queryParams) {
+            const token = queryParams.get('token');
+            const user = JSON.parse(queryParams.get('user'));
+            if (token && user) {
+                localStorage.setItem('token', token);
+                localStorage.setItem('id', user.id);
+            }
+        }
+
 
         const fetchUser = async () => {
             try {
@@ -71,7 +83,7 @@ const NavBar = (props) => {
 
         setCookie('token')
         setCookie('user')
-    }, [dispatch, props.datos]);
+    }, [dispatch, props.datos, show, showFavorites]);
 
 
     return (
@@ -127,7 +139,7 @@ const NavBar = (props) => {
                                     <BsBag className={style.icon} />
                                     <span className={style.fav_count}>{carrito[0] ? carrito[0]?.detalle_carritos?.reduce((acc, item) => acc + parseInt(item.cantidad), 0) : 0}</span>
                                 </Link>
-                                <span className={style.total}> {carrito[0]?.detalle_carritos?.length > 0 ? `$ ${carrito[0]?.total}` : ''}</span>
+                                <span className={style.total}> {carrito[0]?.detalle_carritos?.length > 0 ? `$ ${Math.round(carrito[0]?.total * 100) / 100}` : ''}</span>
                             </div>
                         </div>
                     </div>

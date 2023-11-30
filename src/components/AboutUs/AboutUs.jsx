@@ -64,8 +64,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="">{linkedin}</a>
-                                        <a className='me-3' href="">{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/thiago-fern%C3%A1ndez-733969236/">{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/Frescoco">{github}</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,21 +77,8 @@ const AboutUs = () => {
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>
-                                        <a className='me-3' href="https://www.linkedin.com/in/agustin-almonacid-1431851bb/" target='_blank'>{linkedin}</a>
-                                        <a className='me-3' href="https://github.com/Turco777 " target='_blank'>{github}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='card-container'>
-                            <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                            <div className='card-info'>
-                                <p className='card-name'>Maximiliano Marquez</p>
-                                <div className='card-social'>
-                                    <p className='fs-5'>Full Stack Developer</p>
-                                    <div className='card-link'>
-                                        <a className='me-3' href="https://www.linkedin.com/in/maximiliano-marquez-519274183/" target='_blank'>{linkedin}</a>
-                                        <a className='me-3' href="https://github.com/MaxyMarquez" target='_blank'>{github}</a>
+                                        <a className='me-3' href="https://www.linkedin.com/in/miguel-tello-82138827a/" target='_blank'>{linkedin}</a>
+                                        <a className='me-3' href="https://github.com/Migueltello17" target='_blank'>{github}</a>
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +87,19 @@ const AboutUs = () => {
                             <img src="https://img.freepik.com/foto-gratis/personas-que-sonrie-alegre-hombres-guapos_1187-6057.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699228800&semt=ais" alt="" />
                             <div className='card-info'>
                                 <p className='card-name'>Joaquin Medina</p>
+                                <div className='card-social'>
+                                    <p className='fs-5'>Full Stack Developer</p>
+                                    <div className='card-link'>
+                                        <a className='me-3' href="" target='_blank'>{linkedin}</a>
+                                        <a className='me-3' href="" target='_blank'>{github}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='card-container'>
+                            <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                            <div className='card-info'>
+                                <p className='card-name'>Maximiliano Marquez</p>
                                 <div className='card-social'>
                                     <p className='fs-5'>Full Stack Developer</p>
                                     <div className='card-link'>

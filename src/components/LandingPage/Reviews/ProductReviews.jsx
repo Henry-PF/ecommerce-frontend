@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Rating } from 'react-simple-star-rating';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 import { getAllProductReviews, createProductReview } from '../../../redux/actions.js';
 import style from './style.module.css';
 
@@ -30,15 +31,22 @@ const ProductReviewsAndForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (productId && content.trim() !== '') {
-      try {
-        dispatch(createProductReview({ productId, userId, puntuacion: rating, contenido: content }));
-        console.log('Review creada exitosamente');
-      } catch (error) {
-        console.error('Error al crear la revisión del producto:', error);
+    if (localStorage.getItem('id')) {
+      if (productId && content.trim() !== '') {
+        try {
+          dispatch(createProductReview({ productId, userId, puntuacion: rating, contenido: content }));
+          console.log('Review creada exitosamente');
+        } catch (error) {
+
+        }
+      } else {
+        console.error('El contenido de la revisión no puede estar vacío');
       }
     } else {
-      console.error('El contenido de la revisión no puede estar vacío');
+      Swal.fire({
+        title: 'Debes iniciar sesión',
+        icon: 'warning'
+      });
     }
     setRating(0);
     setContent('');

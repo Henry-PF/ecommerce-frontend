@@ -56,11 +56,9 @@ const Favorites = (props) => {
         }
     }
 
-
     // Funcion de agregar todos los elementos de favoritos al carrito de compras: 
     const handleAddAllToCart = async () => {
         try {
-
             for (const item of favorites) {
                 const dataCart = {
                     id_usuario: item.id_usuario,
@@ -71,7 +69,9 @@ const Favorites = (props) => {
                 }
                 try {
                     const { data } = await axios.post('/carrito/addItem', dataCart);
+                    setDatos(data)
                     if (!data.error) {
+                        setDatos(data)
                         handleDelete(item.id_producto)
                     }
                 } catch (error) {
@@ -89,20 +89,6 @@ const Favorites = (props) => {
             });
             console.error(error);
         }
-        // dispatch(agregarTodosAlCarrito(userId, favorites))
-        //     .then(() => {
-        //         Swal.fire({
-        //             title: 'Todos los productos se han agregado al carrito',
-        //             icon: 'success'
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         Swal.fire({
-        //             title: 'Error al agregar productos al carrito',
-        //             text: 'Hubo un problema al agregar los productos al carrito',
-        //             icon: 'error'
-        //         });
-        //     });
     };
 
     useEffect(() => {
