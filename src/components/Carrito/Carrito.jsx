@@ -31,7 +31,7 @@ const Carrito = () => {
 
       if (cartStock.length !== 0) {
         Swal.fire({
-          title: `El/los producto "${cartStock[0]?.producto?.nombre}" no posee Stock disponiible`,
+          title: `El/los producto "${cartStock[0]?.producto?.nombre}" no posee Stock disponible`,
           text: 'Por favor elimine este producto para poder dealizar la compra',
           icon: 'error'
         })
