@@ -27,7 +27,7 @@ function CreateProduct() {
     stock: 0,
     id_categoria: "",
     id_statud: "",
-    imagen: null, // Agregar el campo para la imagen
+    imagen: null,
   });
 
   const handleChange = (event) => {
