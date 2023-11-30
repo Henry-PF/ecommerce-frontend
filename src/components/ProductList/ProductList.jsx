@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import NavBar from '../LandingPage/Navbar/NavBar';
 import Newsletter from '../LandingPage/Newsletter/Newsletter';
@@ -50,21 +49,21 @@ const ProductList = () => {
 
     if (selectedCategories.includes(checkboxValue)) {
       updatedCategories = selectedCategories.filter(category => category !== checkboxValue);
-      setCurrentPage(1);
     } else {
       updatedCategories = [...selectedCategories, checkboxValue];
-      setCurrentPage(1);
     }
 
     updatedCategories = updatedCategories.filter(category => category !== '');
 
     const updatedParams = new URLSearchParams(location.search);
     updatedParams.set('categoria', updatedCategories.join(','));
+    updatedParams.set('page', '1');
 
     setSelectedCategories(updatedCategories);
 
     navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
+
 
   const toggleFavorites = () => {
     setShow(!show)
@@ -163,21 +162,22 @@ const ProductList = () => {
               <Accordion.Header>Categorias</Accordion.Header>
               <Accordion.Body className='accordion_body'>
                 {
-                  categories?.map(category => (
-                    <div key={category.id}>
-                      <input
-                        type="checkbox"
-                        name={category.nombre}
-                        id={category.id}
-                        className='category_input'
-                        onChange={handleCheckboxChange}
-                        checked={selectedCategories.includes(String(category.id))}
-                      />
-                      <label htmlFor={category.id}>{category.nombre}</label>
-                    </div>
-                  ))
+                  categories
+                    ?.filter(category => category.id_statud !== 2) // Filtrar categorías con id_statud === 2
+                    .map(category => (
+                      <div key={category.id}>
+                        <input
+                          type="checkbox"
+                          name={category.nombre}
+                          id={category.id}
+                          className='category_input'
+                          onChange={handleCheckboxChange}
+                          checked={selectedCategories.includes(String(category.id))}
+                        />
+                        <label htmlFor={category.id}>{category.nombre}</label>
+                      </div>
+                    ))
                 }
-
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -191,28 +191,36 @@ const ProductList = () => {
           </Accordion>
         </aside>
 
+
         {(searchActive || (products.data && products.data.length > 0)) && (
           <ul>
-            {products.data?.map((product) => (
-              <div key={product.id} className="product-card">
-                <picture>
-                  <img src={product.img_productos[0]?.url} alt={product.nombre} />
-                  <div className='btn_container'>
-                    <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
-                    <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
-                    <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
-                  </div>
-                </picture>
-                <div className="product-info">
-                  <h3>{product.nombre}</h3>
-                  <p className='product_category'>{product.categorium?.nombre}</p>
-                  <h4 className='product-price'>$ {product.precio}</h4>
-                </div>
-              </div>
+            {products.data
+              ?.filter(product => product.id_statud === 1)
+              .map((product) => (
+                <li>
 
-            ))}
+                  <div key={product.id} href={`/product_detail/${product.id}`} className="product-card">
+                    <a className={parseInt(product.stock) <= 0 ? 'agotado' : 'card'} href={`/product_detail/${product.id}`}>
+                      <picture>
+                        <img src={product.img_productos[0]?.url} alt={product.nombre} />
+                      </picture>
+                      <div className="product-info">
+                        <h3>{product.nombre}</h3>
+                        <p className='product_category'>{product.categorium?.nombre}</p>
+                        <h4 className='product-price'>$ {product.precio}</h4>
+                      </div>
+                    </a>
+                    <div className='btn_container'>
+                      <button type='button' className='btn_cart' onClick={() => handleCart(product)}><BsBagPlus className='btn_icons' /></button>
+                      <button type='button' className='btn_fav' onClick={() => handleAddFav(product)}><BsHeart className='btn_icons' /></button>
+                      <Link to={`/product_detail/${product.id}`} type='button' className='btn_detail'><BsPlusLg className='btn_icons' /></Link>
+                    </div>
+                  </div>
+                </li>
+              ))}
           </ul>
         )}
+
       </div>
       <ReactPaginate
         previousLabel={<AiOutlineArrowLeft className='pagination-icon' />}

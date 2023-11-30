@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .input {
@@ -38,4 +39,11 @@
     border: none;
     border-radius: 5px;
     background-color: var(--primary);
+}
+
+.inputError {
+    color: red;
+    text-align: left;
+    width: 100%;
+    margin-left: 40%;
 }

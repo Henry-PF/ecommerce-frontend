@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
 import { Rating } from 'react-simple-star-rating';
-import style from './style.module.css';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 import { getAllProductReviews, createProductReview } from '../../../redux/actions.js';
+import style from './style.module.css';
 
 const ProductReviewsAndForm = () => {
   const { id: productId } = useParams();
@@ -34,52 +31,54 @@ const ProductReviewsAndForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (productId && content.trim() !== '') {
-      try {
-        dispatch(createProductReview({ productId, userId, puntuacion: rating, contenido: content }));
-        console.log('Review creada exitosamente');
-      } catch (error) {
-        console.error('Error al crear la revisión del producto:', error);
+    if (localStorage.getItem('id')) {
+      if (productId && content.trim() !== '') {
+        try {
+          dispatch(createProductReview({ productId, userId, puntuacion: rating, contenido: content }));
+          console.log('Review creada exitosamente');
+        } catch (error) {
+
+        }
+      } else {
+        console.error('El contenido de la revisión no puede estar vacío');
       }
     } else {
-      console.error('El contenido de la revisión no puede estar vacío');
+      Swal.fire({
+        title: 'Debes iniciar sesión',
+        icon: 'warning'
+      });
     }
     setRating(0);
     setContent('');
   };
   return (
     <div className='container'>
-      <h2 className='text-center'>Product Reviews</h2>
-      <div>
-        <h3>Leave a Review</h3>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Rating:</label>
-            <Rating onClick={handleRatingChange} ratingValue={rating} />
+      <div className={style.review_container}>
+        <h3>¿Te gusto? Dejanos tu opinión!</h3>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <div className={style.rating_container}>
+            <Rating
+              onClick={handleRatingChange}
+              ratingValue={rating}
+              size={40}
+              style={{ verticalAlign: 'initial' }}
+            />
           </div>
           <div>
-            <label>Content:</label>
             <textarea
               value={content}
               onChange={handleChangeContent}
               required
+              placeholder='Dejanos tu opinón'
             />
           </div>
-          <button type="submit">Submit Review</button>
+          <button className={style.btn_submit} type="submit">Submit Review</button>
         </form>
       </div>
+      {
+        productReviews.data?.map(review => (
+          <div>
 
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {productReviews.data?.map(review => (
-          <SwiperSlide className={style.card} key={review.id}>
             <h4>{review.usuario?.persona?.nombre} {review.usuario?.persona?.apellido}</h4>
             <div
               style={{
@@ -96,9 +95,11 @@ const ProductReviewsAndForm = () => {
               />
             </div>
             {review.contenido}
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          </div>
+
+        ))
+      }
+
     </div>
   );
 };
