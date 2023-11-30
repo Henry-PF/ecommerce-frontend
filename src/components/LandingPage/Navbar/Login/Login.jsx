@@ -77,6 +77,10 @@ const Login = (props) => {
                         <FcGoogle className={style.google_logo} />
                         Iniciar sesi&#243;n con Google
                     </Link>
+                    {/* <Link className={style.btn_google} to='http://localhost:3002/api/auth/google' type="button">
+                        <FcGoogle className={style.google_logo} />
+                        Iniciar sesi&#243;n con Google
+                    </Link> */}
                     <div className='d-flex flex-column'>
                         <p>¿Eres nuevo? <Link to={"/register"}>Registrarse!</Link></p>
                         <p>Ovidaste tu contraseña? <Link to={"#"}>Recuperar Contraseña</Link></p>

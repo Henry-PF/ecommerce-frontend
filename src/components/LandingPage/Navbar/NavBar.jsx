@@ -12,6 +12,7 @@ import Favorites from '../Favorites/Favorites'
 import { getCarrito, getFavorites } from '../../../redux/actions'
 import { useCookies } from 'react-cookie';
 import logo from '../../../assets/logo.png'
+import Swal from 'sweetalert2'
 
 const NavBar = (props) => {
     const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const NavBar = (props) => {
         // const token = Cookies.get('token');
         // const userData = Cookies.get('user')
         const queryParams = new URLSearchParams(location.search);
-
+        console.log(queryParams.get('login'));
         if (queryParams) {
             const token = queryParams.get('token');
             const user = JSON.parse(queryParams.get('user'));
@@ -56,6 +57,14 @@ const NavBar = (props) => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('id', user.id);
             }
+        }
+
+        if (queryParams.get('login') === "false") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Usuario no autenticado o baneado',
+                text: 'Por favor, inicia sesión.',
+            });
         }
 
 
@@ -125,7 +134,7 @@ const NavBar = (props) => {
                             <Link className={style.nav_link} to={'/'}>Inicio</Link>
                             <Link className={style.nav_link} to={'/product_list'}>Tienda</Link>
                             <Link className={style.nav_link} to={'/about_us'}>Sobre Nosotros</Link>
-{/*                             <Link className={style.nav_link} to={''}>Contacto</Link> */}
+                            {/*                             <Link className={style.nav_link} to={''}>Contacto</Link> */}
                         </div>
                         <div className={style.nav_icon_container}>
                             <div className={style.fav_container}>
