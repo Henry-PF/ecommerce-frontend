@@ -193,7 +193,7 @@ const ProductList = () => {
 
 
         {
-          products?.data.length > 0
+          products?.data?.length > 0
             ? (
               <ul>
                 {products?.data
