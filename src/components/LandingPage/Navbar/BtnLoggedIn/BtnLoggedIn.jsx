@@ -19,8 +19,7 @@ const BtnLoggedIn = (props) => {
         Cookies.remove('user');
         Cookies.remove('token');
         logout();
-        window.location.reload();
-
+        window.location.replace('https://trendy-web-lemon.vercel.app');
     }
     return (
         <>
